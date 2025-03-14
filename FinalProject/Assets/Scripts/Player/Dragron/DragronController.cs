@@ -10,6 +10,9 @@ public class DragronController : MonoBehaviour
     public Transform attackPoint;
     public GameObject fireBall;
 
+    public float fireRate = 0.2f;
+    private float nextFireTime = 0f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,9 +48,10 @@ public class DragronController : MonoBehaviour
         }
 
         // Đánh
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
         {
             animator.SetTrigger("Attack");
+            nextFireTime = Time.time + fireRate;
         }
     }
 
@@ -63,7 +67,17 @@ public class DragronController : MonoBehaviour
 
     public void Attack()
     {
-        Instantiate(fireBall, attackPoint.position, attackPoint.rotation);
-        
+        GameObject fireballInstance = Instantiate(fireBall, attackPoint.position, attackPoint.rotation);
+        Fireball fireballScript = fireballInstance.GetComponent<Fireball>();
+
+        // Xác định hướng của fireball dựa trên hướng của nhân vật
+        if (transform.localScale.x < 0)
+        {
+            fireballScript.SetDirection(-1); // Bắn sang trái
+        }
+        else
+        {
+            fireballScript.SetDirection(1); // Bắn sang phải
+        }
     }
 }

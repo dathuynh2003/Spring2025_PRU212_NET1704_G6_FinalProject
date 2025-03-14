@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 
 public class Fireball : MonoBehaviour
@@ -8,6 +8,7 @@ public class Fireball : MonoBehaviour
 
     private float maxX;
     public float damage;
+    private int direction = 1;
 
     private void Awake()
     {
@@ -24,17 +25,27 @@ public class Fireball : MonoBehaviour
         
     }
 
+    public void SetDirection(int dir)
+    {
+        direction = dir;
+        // Đảo ngược hướng của fireball nếu cần
+        if (direction == -1)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         // Move the fireball
-        myBody.linearVelocity = new Vector2(fireballSpeed, 0);
+        myBody.linearVelocity = new Vector2(fireballSpeed * direction, 0);
         OnBecameInvisible();
     }
 
     private void OnBecameInvisible()
     {
-        if (transform.position.x > maxX)
+        if (Mathf.Abs(transform.position.x) > maxX)
         {
             Destroy(gameObject);
         }
