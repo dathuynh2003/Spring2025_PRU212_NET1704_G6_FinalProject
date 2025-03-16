@@ -1477,6 +1477,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Knight_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7674329234355181650, guid: bc85234a94f24c643a8bc3ccdfd35a5f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8414233304869219262, guid: bc85234a94f24c643a8bc3ccdfd35a5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.267118
@@ -1909,6 +1913,10 @@ PrefabInstance:
     - target: {fileID: 1662455095062280484, guid: bad91647c3848c444b0b87752cd9c0d3, type: 3}
       propertyPath: m_Name
       value: Dragron
+      objectReference: {fileID: 0}
+    - target: {fileID: 8137513586104582792, guid: bad91647c3848c444b0b87752cd9c0d3, type: 3}
+      propertyPath: attackRadius
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
