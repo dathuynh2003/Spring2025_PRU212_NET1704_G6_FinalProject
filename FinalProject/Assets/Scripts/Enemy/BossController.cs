@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class BossController : MonoBehaviour
 {
@@ -8,114 +9,107 @@ public class BossController : MonoBehaviour
     private Animator anim;
     private Rigidbody2D body;
     private bool isAttacking = false;
+    private bool isMovingToPlayer = false;
     public int maxHealth = 30;
     private int currentHealth;
     private bool isGrounded = false;
     public int attackDamage = 1;
-    public Transform attackPoint; //điểm trung tâm của vùng tấn công
+    public Transform attackPoint;
     public float attackRadius = 1f;
-    public LayerMask playerLayer; //Lớp của Player
-    public float attackDelay = 10f;
+    public LayerMask playerLayer;
+    public float attackDelay = 3f; // Để dễ test hơn, bạn có thể tăng lên 10f sau
+    private bool isDead = false;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
         GameObject playerObject = GameObject.FindWithTag("Player");
         if (playerObject != null)
         {
             player = playerObject.transform;
         }
+
         currentHealth = maxHealth;
+
         if (attackPoint == null)
         {
             Debug.LogError("LỖI: attackPoint chưa được gán trong Inspector!");
         }
+
+        // Bắt đầu chu trình hành động
+        StartCoroutine(BossActionLoop());
     }
 
     void Update()
     {
-        //if (maxHealth <= 0)
-        //{
-        //    anim.SetTrigger("boss_die");
-        //    return;
-        //}
-        if (player == null) return;
+        if (player == null || isDead) return;
 
-        
-        //float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        float stopDistance = attackRadius * 0.7f; // Dừng lại khi Player gần trúng tâm
-                                                  //if (distanceToPlayer > stopDistance)
-                                                  //{      
-                                                  //    MoveTowardsPlayer();           
-                                                  //}
-                                                  //else
-                                                  //{
-
-        //    if (!isAttacking) // Chỉ tấn công nếu chưa đánh
-        //    {
-        //        Attack();
-        //    }
-
-        //}
-        // Kiểm tra nếu Player cao hơn Boss
-        if (player.position.y > transform.position.y && isGrounded) // 1f là khoảng cách tối thiểu để nhảy
+        // Kiểm tra nếu Player cao hơn Boss => Boss nhảy lên
+        if (player.position.y > transform.position.y + 1f && isGrounded)
         {
             Jump();
         }
-        float distanceToAttackPoint = Vector2.Distance(attackPoint.position, player.position);
-        if (distanceToAttackPoint > stopDistance)
-        {
-            MoveTowardsPlayer();
-        }
+
+        // Xử lý hướng quay của boss theo hướng player
+        Vector2 direction = (player.position - transform.position).normalized;
+        if (direction.x > 0)
+            transform.localScale = new Vector3(3, 3, 3);
         else
+            transform.localScale = new Vector3(-3, 3, 3);
+    }
+
+    private IEnumerator BossActionLoop()
+    {
+        while (!isDead)
         {
-            if (!isAttacking)
+            yield return new WaitForSeconds(attackDelay);
+
+            // Move towards player
+            isMovingToPlayer = true;
+            anim.SetBool("boss_run", true);
+
+            while (Vector2.Distance(attackPoint.position, player.position) > attackRadius * 0.7f)
             {
-                Attack();
+                MoveTowardsPlayer();
+                yield return null; // Đợi tới frame tiếp theo
             }
+
+            // Khi đã đến gần player thì ngừng di chuyển
+            isMovingToPlayer = false;
+            body.linearVelocity = Vector2.zero;
+            anim.SetBool("boss_run", false);
+
+            // Attack player
+            Attack();
+
+            // Đợi thời gian delay trước khi lặp lại
+            yield return new WaitForSeconds(attackDelay);
         }
     }
 
     void MoveTowardsPlayer()
     {
-        if (isAttacking) return;
-
-        anim.SetBool("boss_run", true);
-        ResetAttack();
+        if (!isMovingToPlayer) return;
 
         Vector2 direction = (player.position - transform.position).normalized;
-        float distanceToAttackPoint = Vector2.Distance(attackPoint.position, player.position);
-        float stopDistance = attackRadius * 0.3f;
-
-        if (distanceToAttackPoint > stopDistance)
-        {
-            body.linearVelocity = new Vector2(direction.x * speed, body.linearVelocity.y);
-        }
-        else
-        {
-            body.linearVelocity = Vector2.zero;
-        }
-
-        if (direction.x > 0)
-            transform.localScale = new Vector3(5, 5, 5);
-        else
-            transform.localScale = new Vector3(-5, 5, 5);
+        body.linearVelocity = new Vector2(direction.x * speed, body.linearVelocity.y);
     }
 
     void Attack()
     {
-        if (!isAttacking)
-        {
-            isAttacking = true;
-            anim.SetBool("boss_run", false); // Ngừng chạy khi tấn công
-            anim.SetTrigger("boss_attack2");
-            Debug.Log("Boss đang tấn công!");
-            DealDamageToPlayer();                           
-            body.linearVelocity = Vector2.zero; // Dừng lại khi đánh
-            Invoke(nameof(ResetAttack), attackDelay); // Thời gian delay giữa các đòn đánh
-        }
- 
+
+        //anim.SetBool("boss_run", false);
+        anim.SetTrigger("boss_attack2");
+
+        body.linearVelocity = Vector2.zero;
+        Debug.Log("Boss đang tấn công!");
+
+        DealDamageToPlayer();
+
+        // Sau animation đánh thì cho boss nghỉ xíu rồi reset
+        //Invoke(nameof(ResetAttack), 1f); // Thời gian chờ sau khi đánh (bạn có thể chỉnh)
     }
 
     void Jump()
@@ -123,23 +117,25 @@ public class BossController : MonoBehaviour
         if (isGrounded)
         {
             anim.SetTrigger("boss_jump");
-            anim.SetTrigger("boss_fall");
             body.linearVelocity = new Vector2(body.linearVelocity.x, speed);
             isAttacking = false;
         }
+    }
 
-    }
-    void Die()
-    {
-        anim.SetTrigger("boss_die");
-        body.linearVelocity = Vector2.zero;
-        Debug.Log("Boss die");
-        //GetComponent<Collider2D>().enabled = false;
-        //Destroy(gameObject, 2f);
-    }
     void ResetAttack()
     {
         isAttacking = false;
+    }
+
+    void Die()
+    {
+        isDead = true;
+        anim.SetTrigger("boss_die");
+        body.linearVelocity = Vector2.zero;
+        Debug.Log("Boss die");
+        GetComponent<Collider2D>().enabled = false;
+        StopAllCoroutines();
+        Destroy(gameObject, 2f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -148,48 +144,28 @@ public class BossController : MonoBehaviour
         {
             isGrounded = true;
         }
-       
     }
 
-    public int GetCurrentHealth()
-    {
-        return currentHealth;
-    }
-
-    //trừ máu player khi bị boss tấn công
-    //private void DealDamageToPlayer()
-    //{
-    //    Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRadius, playerLayer);
-
-    //    if (player != null)
-    //    {
-    //        KnightController knightController = player.GetComponent<KnightController>();
-    //        knightController.TakeDame(attackDamage);
-    //    }
-    //}
     private void DealDamageToPlayer()
     {
         Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.position, attackRadius, playerLayer);
-        Debug.Log("LayerMask của Player là: " + hitPlayer.gameObject.layer);
 
         if (hitPlayer != null)
         {
-           // float distanceToCenter = Vector2.Distance(hitPlayer.transform.position, attackPoint.position);
+            anim.SetBool("boss_run", false);
 
-     //       if (distanceToCenter < attackRadius * 0.5f) // Chỉ trúng nếu gần tâm
-       //     {
-                KnightController knightController = hitPlayer.GetComponent<KnightController>();
-                DragronController dragon = hitPlayer.GetComponent<DragronController>();
+            KnightController knightController = hitPlayer.GetComponent<KnightController>();
+            DragronController dragon = hitPlayer.GetComponent<DragronController>();
+
             if (knightController != null)
-                {
-                    Debug.Log("Player nhận sát thương!");
-                    knightController.TakeDame(attackDamage);
-                }
-            //    }
+            {
+                Debug.Log("Player nhận sát thương!");
+                knightController.TakeDame(attackDamage);
+            }
             else if (dragon != null)
             {
                 Debug.Log("Dragon nhận sát thương!");
-               // dragon.TakeDame(attackDamage);
+                // dragon.TakeDame(attackDamage);
             }
         }
         else
@@ -198,14 +174,13 @@ public class BossController : MonoBehaviour
         }
     }
 
-    //trừ máu của boss khi bị tấn công
     public void TakeDamage(int damage)
     {
         if (currentHealth <= 0) return;
 
         currentHealth -= damage;
-       // anim.SetTrigger("boss_take_hit");
         Debug.Log("Current health boss: " + currentHealth);
+
         if (currentHealth <= 0)
         {
             Die();
@@ -217,5 +192,10 @@ public class BossController : MonoBehaviour
         if (attackPoint == null) return;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+    }
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
     }
 }
