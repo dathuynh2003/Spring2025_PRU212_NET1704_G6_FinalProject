@@ -1972,6 +1972,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss_Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5302279562223452706, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.607
+      objectReference: {fileID: 0}
+    - target: {fileID: 5302279562223452706, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7097909210433103119, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: speed
       value: 4
@@ -1982,31 +1990,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7097909210433103119, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: attackDelay
-      value: 1
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7097909210433103119, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
+      propertyPath: attackRadius
+      value: 1.15
       objectReference: {fileID: 0}
     - target: {fileID: 7097909210433103119, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: playerLayer.m_Bits
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: 7931928705119023409, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 8300555933938532585, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8300555933938532585, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8300555933938532585, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8300555933938532585, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.3
+      value: 7.18
       objectReference: {fileID: 0}
     - target: {fileID: 8300555933938532585, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.71
+      value: -1.52
       objectReference: {fileID: 0}
     - target: {fileID: 8300555933938532585, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: m_LocalPosition.z
