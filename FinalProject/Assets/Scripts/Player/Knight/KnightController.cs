@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class KnightController : MonoBehaviour
 {
@@ -17,18 +16,13 @@ public class KnightController : MonoBehaviour
     public Transform attackPoint;
     public float attackRadius = 1f;
     public LayerMask attackLayer;
-    //[SerializeField] private Transform enemy;
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        //GameObject enemyOject = GameObject.FindWithTag("Enemy");
-        //if (enemyOject != null)
-        //{
-        //    enemy = enemyOject.transform;
-     
-        //}
+
     }
 
     // Update is called once per frame
@@ -72,41 +66,16 @@ public class KnightController : MonoBehaviour
         transform.localScale = new Vector3(Mathf.Sign(movement), 1, 1);
     }
 
-    //public void Attack()
-    //{
-    //    Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
-    //    Debug.Log(colliAttack);
-    //    if (colliAttack)
-    //    {
-    //        Debug.Log(colliAttack.gameObject.name + " takes dame");
-    //    }
-    //    BossController bossController = enemy.GetComponent<BossController>();
-    //    bossController.TakeDamage(1);
-    //}
     public void Attack()
     {
-        Debug.Log("Player thực hiện đòn tấn công!");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, attackLayer);
-        Debug.Log("Số lượng enemy bị đánh trúng: " + hitEnemies.Length);
-        foreach (Collider2D enemy in hitEnemies)
+        Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
+        Debug.Log(colliAttack);
+        if (colliAttack)
         {
-            // Kiểm tra từng loại enemy và gọi TakeDamage()
-            if (enemy.TryGetComponent<BossController>(out BossController boss))
-            {
-
-                boss.TakeDamage(1);
-                Debug.Log("Player đã trừ máu Boss! Máu còn lại: " + boss.GetCurrentHealth());
-            }
-            //else if (enemy.TryGetComponent<GoblinController>(out GoblinController goblin))
-            //{
-            //    goblin.TakeDamage(1);
-            //}
-            //else if (enemy.TryGetComponent<OrcController>(out OrcController orc))
-            //{
-            //    orc.TakeDamage(1);
-            //}
+            Debug.Log(colliAttack.gameObject.name + " takes dame");
         }
     }
+
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
@@ -140,7 +109,6 @@ public class KnightController : MonoBehaviour
             return;
         }
         maxHealth -= dame;
-        Debug.Log("Player current health: " + maxHealth);  
     }
 
     void Die ()
