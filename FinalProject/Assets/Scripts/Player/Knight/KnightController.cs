@@ -68,41 +68,42 @@ public class KnightController : MonoBehaviour
         transform.localScale = new Vector3(Mathf.Sign(movement), 1, 1);
     }
 
-    //public void Attack()
-    //{
-    //    Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
-    //    Debug.Log(colliAttack);
-    //    if (colliAttack)
-    //    {
-    //        Debug.Log(colliAttack.gameObject.name + " takes dame");
-    //    }
-    //    BossController bossController = enemy.GetComponent<BossController>();
-    //    bossController.TakeDamage(1);
-    //}
     public void Attack()
     {
-        Debug.Log("Player thực hiện đòn tấn công!");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, attackLayer);
-        Debug.Log("Số lượng enemy bị đánh trúng: " + hitEnemies.Length);
-        foreach (Collider2D enemy in hitEnemies)
+        Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
+        Debug.Log(colliAttack);
+        if (colliAttack)
         {
-            // Kiểm tra từng loại enemy và gọi TakeDamage()
-            if (enemy.TryGetComponent<BossController>(out BossController boss))
+            Debug.Log(colliAttack.gameObject.name + " takes dame");
+            if (colliAttack.gameObject.name == "Boss_Enemy")
             {
-
-                boss.TakeDamage(1);
-                Debug.Log("Player đã trừ máu Boss! Máu còn lại: " + boss.GetCurrentHealth());
+                var boss = colliAttack.GetComponent<BossController>();
+                boss.TakeDamage(10);
             }
-            //else if (enemy.TryGetComponent<GoblinController>(out GoblinController goblin))
-            //{
-            //    goblin.TakeDamage(1);
-            //}
-            //else if (enemy.TryGetComponent<OrcController>(out OrcController orc))
-            //{
-            //    orc.TakeDamage(1);
-            //}
         }
     }
+    //public void Attack()
+    //{
+    //    Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, attackLayer);
+    //    foreach (Collider2D enemy in hitEnemies)
+    //    {
+    //        // Kiểm tra từng loại enemy và gọi TakeDamage()
+    //        if (enemy.TryGetComponent<BossController>(out BossController boss))
+    //        {
+
+    //            boss.TakeDamage(1);
+    //            Debug.Log("Player đã trừ máu Boss! Máu còn lại: " + boss.GetCurrentHealth());
+    //        }
+    //        //else if (enemy.TryGetComponent<GoblinController>(out GoblinController goblin))
+    //        //{
+    //        //    goblin.TakeDamage(1);
+    //        //}
+    //        //else if (enemy.TryGetComponent<OrcController>(out OrcController orc))
+    //        //{
+    //        //    orc.TakeDamage(1);
+    //        //}
+    //    }
+    //}
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
@@ -112,7 +113,7 @@ public class KnightController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 
-    private void Jump() 
+    private void Jump()
     {
         //rb.linearVelocity = new Vector2(rb.linearVelocityX, 10f);
         rb.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
@@ -138,14 +139,24 @@ public class KnightController : MonoBehaviour
         currentHealth -= dame;
     }
 
-    void Die ()
+    void Die()
     {
-        Debug.Log("Player Die");
+        animator.SetTrigger("Die");
+    }
+
+    public void DestroyPlayer()
+    {
+        Destroy(gameObject);
     }
 
     public void Heal(float healAmount)
     {
         currentHealth = (currentHealth + healAmount > maxHealth) ? maxHealth : currentHealth + healAmount;
         Debug.Log("Player HP: " + currentHealth);
+    }
+
+    public void Victory()
+    {
+        animator.SetTrigger("Win");
     }
 }
