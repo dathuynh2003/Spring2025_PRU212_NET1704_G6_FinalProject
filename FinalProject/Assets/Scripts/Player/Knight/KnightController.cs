@@ -137,6 +137,7 @@ public class KnightController : MonoBehaviour
             return;
         }
         currentHealth -= dame;
+        animator.SetTrigger("Hurt");
     }
 
     void Die()

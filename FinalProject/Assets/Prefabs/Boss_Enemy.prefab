@@ -429,7 +429,7 @@ MonoBehaviour:
   items:
   - {fileID: 6799146110843160947, guid: 6a8d2bfbfa5b56a45b2d631f50ba7977, type: 3}
   dropChances:
-  - 1
+  - 0.1
 --- !u!1 &7931928705119023409
 GameObject:
   m_ObjectHideFlags: 0
