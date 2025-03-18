@@ -5,7 +5,6 @@ public class BossController : MonoBehaviour
 {
     [SerializeField] private float speed = 3f;
     [SerializeField] private Transform player;
-    [SerializeField] private float attackRange = 1.5f;
     private Animator anim;
     private Rigidbody2D body;
     private bool isAttacking = false;
@@ -19,7 +18,14 @@ public class BossController : MonoBehaviour
     public LayerMask playerLayer;
     public float attackDelay = 3f; // Để dễ test hơn, bạn có thể tăng lên 10f sau
     private bool isDead = false;
-
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip bossStart;
+    [SerializeField] private AudioClip attack1Sound;
+    [SerializeField] private AudioClip attack2Sound;
+    [SerializeField] private AudioClip runSound;
+    [SerializeField] private AudioClip idleSound;
+    [SerializeField] private AudioClip dieSound;
+    [SerializeField] private AudioClip jumpSound;
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
@@ -39,6 +45,8 @@ public class BossController : MonoBehaviour
         }
 
         // Bắt đầu chu trình hành động
+
+        PlaySound(bossStart);
         StartCoroutine(BossActionLoop());
     }
 
@@ -47,10 +55,10 @@ public class BossController : MonoBehaviour
         if (player == null || isDead) return;
 
         // Kiểm tra nếu Player cao hơn Boss => Boss nhảy lên
-        if (player.position.y > transform.position.y + 1f && isGrounded)
-        {
-            Jump();
-        }
+        //if (player.position.y > transform.position.y + 1f && isGrounded)
+        //{
+        //    Jump();
+        //}
 
         // Xử lý hướng quay của boss theo hướng player
         Vector2 direction = (player.position - transform.position).normalized;
@@ -58,10 +66,13 @@ public class BossController : MonoBehaviour
             transform.localScale = new Vector3(3, 3, 3);
         else
             transform.localScale = new Vector3(-3, 3, 3);
+
+
     }
 
     private IEnumerator BossActionLoop()
     {
+
         while (!isDead)
         {
             yield return new WaitForSeconds(attackDelay);
@@ -69,20 +80,27 @@ public class BossController : MonoBehaviour
             // Move towards player
             isMovingToPlayer = true;
             anim.SetBool("boss_run", true);
-
-            while (Vector2.Distance(attackPoint.position, player.position) > attackRadius * 0.7f)
+            while (Vector2.Distance(attackPoint.position, player.position) > attackRadius)
             {
+
                 MoveTowardsPlayer();
                 yield return null; // Đợi tới frame tiếp theo
             }
-
+           
             // Khi đã đến gần player thì ngừng di chuyển
             isMovingToPlayer = false;
             body.linearVelocity = Vector2.zero;
             anim.SetBool("boss_run", false);
-
+            StopRunSound();
             // Attack player
-            Attack();
+           
+
+            // Kiểm tra nếu Player cao hơn Boss 1 khoảng nhất định và trong tầm đánh
+            if (player.position.y > transform.position.y && Vector2.Distance(attackPoint.position, player.position) <= attackRadius)
+            {
+                Attack1();
+            }
+            else Attack();
 
             // Đợi thời gian delay trước khi lặp lại
             yield return new WaitForSeconds(attackDelay);
@@ -92,21 +110,38 @@ public class BossController : MonoBehaviour
     void MoveTowardsPlayer()
     {
         if (!isMovingToPlayer) return;
-
         Vector2 direction = (player.position - transform.position).normalized;
         body.linearVelocity = new Vector2(direction.x * speed, body.linearVelocity.y);
+        // Phát âm thanh chạy nếu nó chưa phát
+        if (!audioSource.isPlaying || audioSource.clip != runSound)
+        {
+            PlayLoopSound(runSound);
+        }
     }
+    void Attack1()
+    {
 
+        //anim.SetBool("boss_run", false);
+        anim.SetTrigger("boss_attack1");
+        PlaySound(attack1Sound);
+        body.linearVelocity = Vector2.zero;
+        Debug.Log("Boss đang tấn công!");
+
+        //DealDamageToPlayer();
+
+        // Sau animation đánh thì cho boss nghỉ xíu rồi reset
+        //Invoke(nameof(ResetAttack), 1f); // Thời gian chờ sau khi đánh (bạn có thể chỉnh)
+    }
     void Attack()
     {
 
         //anim.SetBool("boss_run", false);
         anim.SetTrigger("boss_attack2");
-
+        PlaySound(attack2Sound);
         body.linearVelocity = Vector2.zero;
         Debug.Log("Boss đang tấn công!");
 
-        DealDamageToPlayer();
+       // DealDamageToPlayer();
 
         // Sau animation đánh thì cho boss nghỉ xíu rồi reset
         //Invoke(nameof(ResetAttack), 1f); // Thời gian chờ sau khi đánh (bạn có thể chỉnh)
@@ -117,6 +152,7 @@ public class BossController : MonoBehaviour
         if (isGrounded)
         {
             anim.SetTrigger("boss_jump");
+            
             body.linearVelocity = new Vector2(body.linearVelocity.x, speed);
             isAttacking = false;
         }
@@ -131,9 +167,10 @@ public class BossController : MonoBehaviour
     {
         isDead = true;
         anim.SetTrigger("boss_die");
+        PlaySound(dieSound);
         body.linearVelocity = Vector2.zero;
         Debug.Log("Boss die");
-        GetComponent<Collider2D>().enabled = false;
+       // GetComponent<Collider2D>().enabled = false;
         StopAllCoroutines();
         Destroy(gameObject, 2f);
     }
@@ -153,7 +190,6 @@ public class BossController : MonoBehaviour
         if (hitPlayer != null)
         {
             anim.SetBool("boss_run", false);
-
             KnightController knightController = hitPlayer.GetComponent<KnightController>();
             DragronController dragon = hitPlayer.GetComponent<DragronController>();
 
@@ -197,5 +233,32 @@ public class BossController : MonoBehaviour
     public int GetCurrentHealth()
     {
         return currentHealth;
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
+
+    private void PlayLoopSound(AudioClip clip)
+    {
+        if (clip == null || audioSource == null) return;
+
+        // Nếu đang phát đúng clip rồi thì không phát lại
+        if (audioSource.isPlaying && audioSource.clip == clip) return;
+
+        audioSource.clip = clip;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+    private void StopRunSound()
+    {
+        if (audioSource.isPlaying && audioSource.clip == runSound)
+        {
+            audioSource.Stop();
+        }
     }
 }
