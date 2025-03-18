@@ -155,7 +155,6 @@ public class MushroomEnemy : MonoBehaviour
 
         // Ẩn enemy thay vì hủy ngay lập tức
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        //gameObject.GetComponent<Collider2D>().enabled = false;
 
         // Hủy enemy sau 4 giây (đảm bảo hiệu ứng nổ hiển thị xong)
         Destroy(gameObject, 4f);
