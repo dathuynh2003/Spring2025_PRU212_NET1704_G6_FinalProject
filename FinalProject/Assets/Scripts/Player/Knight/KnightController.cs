@@ -3,7 +3,8 @@
 public class KnightController : MonoBehaviour
 {
 
-    public int maxHealth = 5;
+    public float maxHealth = 5;
+    private float currentHealth;
 
     public float jumpHeight = 10f;
     public float moveSpeed = 5f;
@@ -22,13 +23,14 @@ public class KnightController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (maxHealth < 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -104,15 +106,21 @@ public class KnightController : MonoBehaviour
 
     public void TakeDame(int dame)
     {
-        if (maxHealth < 0)
+        if (currentHealth < 0)
         {
             return;
         }
-        maxHealth -= dame;
+        currentHealth -= dame;
     }
 
     void Die ()
     {
         Debug.Log("Player Die");
+    }
+
+    public void Heal(float healAmount)
+    {
+        currentHealth = (currentHealth + healAmount > maxHealth) ? maxHealth : currentHealth + healAmount;
+        Debug.Log("Player HP: " + currentHealth);
     }
 }
