@@ -84,6 +84,12 @@ public class DragronController : MonoBehaviour
         {
             animator.SetTrigger("Hurt");
         }
+
+        // Hàm test = nhấn U
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            TriggerDizzyEffect();
+        }
     }
 
     // Xử lý va chạm
