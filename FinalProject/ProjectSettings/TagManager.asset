@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - Heal Item
+  - Attack Item
   layers:
   - Default
   - TransparentFX
@@ -42,6 +44,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 2
+    uniqueID: 3078578285
     locked: 0
   m_RenderingLayers:
   - Default

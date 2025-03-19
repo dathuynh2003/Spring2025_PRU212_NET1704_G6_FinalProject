@@ -14,13 +14,13 @@ GameObject:
   - component: {fileID: 8137513586104582792}
   - component: {fileID: 8325249508946876135}
   - component: {fileID: 4440916311321108837}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dragron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1504692102903453990
 Transform:
   m_ObjectHideFlags: 0
@@ -131,7 +131,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a661a1c620ef0d47a28d027f66365e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 5
   attackPoint: {fileID: 3454007336119752334}
+  attackRadius: 0.6
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 8
   fireBall: {fileID: 4242301704070126985, guid: 099a695a2842c3448a5e2807f79b4815, type: 3}
   fireRate: 0.2
 --- !u!95 &8325249508946876135
@@ -247,7 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3454007336119752334}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attack_Point
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
