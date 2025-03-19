@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 4804192066456639313}
   - component: {fileID: 6944791256897465566}
   - component: {fileID: 9183791290072133221}
+  - component: {fileID: 3674402914349716181}
   m_Layer: 6
   m_Name: Knight_Player
   m_TagString: Player
@@ -157,7 +158,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27329bb551b710543adb91141de0f624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  facingRight: 1
   maxHealth: 10
+  baseDame: 2
   jumpHeight: 20
   moveSpeed: 5
   attackPoint: {fileID: 1448690759517954909}
@@ -238,3 +241,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0133455, y: 1.5840948}
   m_EdgeRadius: 0
+--- !u!114 &3674402914349716181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7674329234355181650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bceab2bb177bcb4dbc00d9d68b4b9a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 5

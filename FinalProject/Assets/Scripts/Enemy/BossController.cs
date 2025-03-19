@@ -7,7 +7,6 @@ public class BossController : MonoBehaviour
     [SerializeField] private Transform player;
     private Animator anim;
     private Rigidbody2D body;
-    private bool isAttacking = false;
     private bool isMovingToPlayer = false;
     public float maxHealth = 30;
     private float currentHealth;
@@ -171,13 +170,7 @@ public class BossController : MonoBehaviour
             anim.SetTrigger("boss_jump");
             
             body.linearVelocity = new Vector2(body.linearVelocity.x, speed);
-            isAttacking = false;
         }
-    }
-
-    void ResetAttack()
-    {
-        isAttacking = false;
     }
 
     void Die()
