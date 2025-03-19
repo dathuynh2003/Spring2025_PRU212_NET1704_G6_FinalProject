@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1448690759517954909}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Attack_Point
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -45,9 +45,9 @@ GameObject:
   - component: {fileID: 4804192066456639313}
   - component: {fileID: 6944791256897465566}
   - component: {fileID: 9183791290072133221}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Knight_Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,8 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27329bb551b710543adb91141de0f624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
-  jumpHeight: 10
+  maxHealth: 10
+  jumpHeight: 20
   moveSpeed: 5
   attackPoint: {fileID: 1448690759517954909}
   attackRadius: 0.6
