@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      buff-dame_0: 7340072386873433228
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
