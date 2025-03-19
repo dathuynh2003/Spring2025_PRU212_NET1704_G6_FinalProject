@@ -9,8 +9,8 @@ public class BossController : MonoBehaviour
     private Rigidbody2D body;
     private bool isAttacking = false;
     private bool isMovingToPlayer = false;
-    public int maxHealth = 30;
-    private int currentHealth;
+    public float maxHealth = 30;
+    private float currentHealth;
     private bool isGrounded = false;
     public int attackDamage = 1;
     public Transform attackPoint;
@@ -26,6 +26,13 @@ public class BossController : MonoBehaviour
     [SerializeField] private AudioClip idleSound;
     [SerializeField] private AudioClip dieSound;
     [SerializeField] private AudioClip jumpSound;
+
+    private EnemyDropItem dropItemController;
+    private void Awake()
+    {
+        dropItemController = GetComponent<EnemyDropItem>();
+    }
+
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
@@ -80,6 +87,10 @@ public class BossController : MonoBehaviour
             // Move towards player
             isMovingToPlayer = true;
             anim.SetBool("boss_run", true);
+            if (player == null)
+            {
+                break;
+            }
             while (Vector2.Distance(attackPoint.position, player.position) > attackRadius)
             {
 
@@ -170,9 +181,17 @@ public class BossController : MonoBehaviour
         PlaySound(dieSound);
         body.linearVelocity = Vector2.zero;
         Debug.Log("Boss die");
-       // GetComponent<Collider2D>().enabled = false;
+        // GetComponent<Collider2D>().enabled = false;
+
+        if (dropItemController != null)
+        {
+            dropItemController.DropItem();
+        }
+
         StopAllCoroutines();
         Destroy(gameObject, 2f);
+
+        player.gameObject.GetComponent<KnightController>().Victory();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -195,7 +214,7 @@ public class BossController : MonoBehaviour
 
             if (knightController != null)
             {
-                Debug.Log("Player nhận sát thương!");
+                //Debug.Log("Player nhận sát thương!");
                 knightController.TakeDame(attackDamage);
             }
             else if (dragon != null)
@@ -210,7 +229,7 @@ public class BossController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (currentHealth <= 0) return;
 
@@ -230,7 +249,7 @@ public class BossController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 
-    public int GetCurrentHealth()
+    public float GetCurrentHealth()
     {
         return currentHealth;
     }

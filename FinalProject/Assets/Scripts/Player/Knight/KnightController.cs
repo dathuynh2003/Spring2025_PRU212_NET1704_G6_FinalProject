@@ -3,8 +3,13 @@ using UnityEngine.InputSystem.XR;
 
 public class KnightController : MonoBehaviour
 {
+    public bool facingRight = true;
 
-    public int maxHealth = 5;
+    public float maxHealth = 5;
+    private float currentHealth;
+
+    public float baseDame = 2;
+    private float currentDame;
 
     public float jumpHeight = 10f;
     public float moveSpeed = 5f;
@@ -17,24 +22,19 @@ public class KnightController : MonoBehaviour
     public Transform attackPoint;
     public float attackRadius = 1f;
     public LayerMask attackLayer;
-    //[SerializeField] private Transform enemy;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        //GameObject enemyOject = GameObject.FindWithTag("Enemy");
-        //if (enemyOject != null)
-        //{
-        //    enemy = enemyOject.transform;
-     
-        //}
+        currentHealth = maxHealth;
+        currentDame = baseDame;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (maxHealth < 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -44,6 +44,16 @@ public class KnightController : MonoBehaviour
         // Chạy
         if (movement != 0)
         {
+            if (movement < 0 && facingRight)
+            {
+                transform.eulerAngles = new Vector3(0, -180, 0);
+                facingRight = false;
+            } 
+            else if (movement > 0 && facingRight == false)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                facingRight = true;
+            }
             animator.SetBool("isRunning", true);
         }
         else
@@ -55,58 +65,62 @@ public class KnightController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             Jump();
-            isGrounded = false;
             animator.SetBool("isJumping", true);
         }
 
         // Đánh
         if (Input.GetMouseButtonDown(0))
         {
-            animator.SetTrigger("Attack");
+                animator.SetTrigger("Attack");
         }
     }
 
     private void FixedUpdate()
     {
-        transform.Translate(Vector2.right * moveSpeed * movement * Time.deltaTime);
-        transform.localScale = new Vector3(Mathf.Sign(movement), 1, 1);
+        //transform.Translate(Vector2.right * moveSpeed * movement * Time.deltaTime);
+        transform.position += new Vector3(movement, 0, 0) *  Time.fixedDeltaTime * moveSpeed;
+        //transform.localScale = new Vector3(Mathf.Sign(movement), 1, 1);
     }
 
-    //public void Attack()
-    //{
-    //    Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
-    //    Debug.Log(colliAttack);
-    //    if (colliAttack)
-    //    {
-    //        Debug.Log(colliAttack.gameObject.name + " takes dame");
-    //    }
-    //    BossController bossController = enemy.GetComponent<BossController>();
-    //    bossController.TakeDamage(1);
-    //}
     public void Attack()
     {
-        Debug.Log("Player thực hiện đòn tấn công!");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, attackLayer);
-        Debug.Log("Số lượng enemy bị đánh trúng: " + hitEnemies.Length);
-        foreach (Collider2D enemy in hitEnemies)
+        Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
+        if (colliAttack)
         {
-            // Kiểm tra từng loại enemy và gọi TakeDamage()
-            if (enemy.TryGetComponent<BossController>(out BossController boss))
+            Debug.Log(colliAttack.gameObject.name + " takes dame");
+            if (colliAttack.gameObject.name == "Boss_Enemy")
             {
-
-                boss.TakeDamage(1);
-                Debug.Log("Player đã trừ máu Boss! Máu còn lại: " + boss.GetCurrentHealth());
+                var boss = colliAttack.GetComponent<BossController>();
+                boss.TakeDamage(currentDame);
+            } else if (colliAttack.gameObject.name == "FlyingEye")
+            {
+                var enemy = colliAttack.GetComponent<FlyingEye>();
+                enemy.TakeDame(currentDame);
             }
-            //else if (enemy.TryGetComponent<GoblinController>(out GoblinController goblin))
-            //{
-            //    goblin.TakeDamage(1);
-            //}
-            //else if (enemy.TryGetComponent<OrcController>(out OrcController orc))
-            //{
-            //    orc.TakeDamage(1);
-            //}
         }
     }
+    //public void Attack()
+    //{
+    //    Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, attackLayer);
+    //    foreach (Collider2D enemy in hitEnemies)
+    //    {
+    //        // Kiểm tra từng loại enemy và gọi TakeDamage()
+    //        if (enemy.TryGetComponent<BossController>(out BossController boss))
+    //        {
+
+    //            boss.TakeDamage(1);
+    //            Debug.Log("Player đã trừ máu Boss! Máu còn lại: " + boss.GetCurrentHealth());
+    //        }
+    //        //else if (enemy.TryGetComponent<GoblinController>(out GoblinController goblin))
+    //        //{
+    //        //    goblin.TakeDamage(1);
+    //        //}
+    //        //else if (enemy.TryGetComponent<OrcController>(out OrcController orc))
+    //        //{
+    //        //    orc.TakeDamage(1);
+    //        //}
+    //    }
+    //}
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
@@ -116,7 +130,7 @@ public class KnightController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 
-    private void Jump() 
+    private void Jump()
     {
         //rb.linearVelocity = new Vector2(rb.linearVelocityX, 10f);
         rb.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
@@ -133,18 +147,40 @@ public class KnightController : MonoBehaviour
         }
     }
 
-    public void TakeDame(int dame)
+    public void TakeDame(float dame)
     {
-        if (maxHealth < 0)
+        if (currentHealth < 0)
         {
             return;
         }
-        maxHealth -= dame;
-        Debug.Log("Player current health: " + maxHealth);  
+        currentHealth -= dame;
+        animator.SetTrigger("Hurt");
+        Debug.LogFormat("Players remaining health {0}/{1} HP", currentHealth, maxHealth);
     }
 
-    void Die ()
+    void Die()
     {
-        Debug.Log("Player Die");
+        animator.SetTrigger("Die");
+    }
+
+    public void DestroyPlayer()
+    {
+        Destroy(gameObject);
+    }
+
+    public void Heal(float healAmount)
+    {
+        currentHealth = (currentHealth + healAmount > maxHealth) ? maxHealth : currentHealth + healAmount;
+        Debug.Log("Player HP: " + currentHealth);
+    }
+
+    public void Victory()
+    {
+        animator.SetTrigger("Win");
+    }
+
+    public void buffDame(float dameIncrease)
+    {
+        currentDame += dameIncrease;
     }
 }
