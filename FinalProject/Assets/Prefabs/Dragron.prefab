@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 6294728544636113382}
   - component: {fileID: 8137513586104582792}
   - component: {fileID: 8325249508946876135}
-  - component: {fileID: 4440916311321108837}
+  - component: {fileID: 4412396718415055947}
   m_Layer: 6
   m_Name: Dragron
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,8 +161,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &4440916311321108837
-PolygonCollider2D:
+--- !u!61 &4412396718415055947
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -195,7 +195,7 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.014189482, y: -0.571383}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -205,44 +205,8 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.34, y: -0.9}
-      - {x: 0.34, y: -0.75}
-      - {x: 0.38, y: -0.7}
-      - {x: 0.48999998, y: -0.53999996}
-      - {x: 0.48999998, y: -0.45999998}
-      - {x: 0.39, y: -0.35999998}
-      - {x: 0.55, y: -0.16}
-      - {x: 0.55, y: 0.01}
-      - {x: 0.52, y: 0.03}
-      - {x: 0.35, y: -0.04}
-      - {x: 0.26, y: 0.08}
-      - {x: 0.07, y: 0.11}
-      - {x: -0.049999997, y: 0.14999999}
-      - {x: -0.12, y: 0.14999999}
-      - {x: -0.14999999, y: 0.14}
-      - {x: -0.21, y: 0.04}
-      - {x: -0.38, y: 0.02}
-      - {x: -0.39999998, y: -0.04}
-      - {x: -0.51, y: -0.14}
-      - {x: -0.51, y: -0.28}
-      - {x: -0.65999997, y: -0.37}
-      - {x: -0.87, y: -0.63}
-      - {x: -0.89, y: -0.65999997}
-      - {x: -0.89, y: -0.76}
-      - {x: -0.66999996, y: -0.85999995}
-      - {x: -0.53999996, y: -0.82}
-      - {x: -0.48999998, y: -0.89}
-      - {x: -0.45, y: -0.88}
-      - {x: -0.26999998, y: -1.03}
-      - {x: -0.17, y: -1.0799999}
-      - {x: -0.16, y: -1.2099999}
-      - {x: -0.14, y: -1.23}
-      - {x: 0.37, y: -1.23}
-      - {x: 0.31, y: -1.03}
-      - {x: 0.35, y: -0.95}
-  m_UseDelaunayMesh: 0
+  m_Size: {x: 0.81438875, y: 1.3244805}
+  m_EdgeRadius: 0
 --- !u!1 &1723063602368696323
 GameObject:
   m_ObjectHideFlags: 0

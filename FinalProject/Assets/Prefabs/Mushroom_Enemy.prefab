@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4937812247571215101}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -45,9 +45,9 @@ GameObject:
   - component: {fileID: 8079735622631177412}
   - component: {fileID: 4681547701998860789}
   - component: {fileID: 4000023622444321890}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mushroom_Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -28,9 +28,13 @@ public class MushroomEnemy : MonoBehaviour
     public LayerMask playerLayer;
     public float explodeRadius = 2f;
 
+    private int maxHealth = 5;
+    private int currentHealth;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        currentHealth = maxHealth;
         startPosition = transform.position;
         animator = GetComponent<Animator>();
         //animator.SetBool("IsRunning", true);
@@ -121,11 +125,17 @@ public class MushroomEnemy : MonoBehaviour
     //    Gizmos.DrawRay(checkPoint.position, Vector2.down * distance);
     //}
 
-    public void TakeDamage()
+    public void TakeDamage(int damage)
     {
-        if (isDead) return; // Nếu đã chết, không làm gì cả
+        if (isDead) return;
 
-        animator.SetTrigger("Hurt"); // Kích hoạt animation Hurt
+        currentHealth -= damage;
+        animator.SetTrigger("Hurt");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     // Hàm để kích hoạt animation Death

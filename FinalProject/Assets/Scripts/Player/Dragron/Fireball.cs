@@ -7,7 +7,7 @@ public class Fireball : MonoBehaviour
     private Rigidbody2D myBody;
 
     private float maxX;
-    public float damage;
+    public int damage = 1;
     private int direction = 1;
 
     private void Awake()
@@ -48,6 +48,20 @@ public class Fireball : MonoBehaviour
         if (Mathf.Abs(transform.position.x) > maxX)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            MushroomEnemy enemy = collision.GetComponent<MushroomEnemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage); 
+            }
+
+            Destroy(gameObject); 
         }
     }
 }
