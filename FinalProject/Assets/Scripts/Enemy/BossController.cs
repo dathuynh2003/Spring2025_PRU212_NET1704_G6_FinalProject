@@ -9,8 +9,8 @@ public class BossController : MonoBehaviour
     private Rigidbody2D body;
     private bool isAttacking = false;
     private bool isMovingToPlayer = false;
-    public int maxHealth = 30;
-    private int currentHealth;
+    public float maxHealth = 30;
+    private float currentHealth;
     private bool isGrounded = false;
     public int attackDamage = 1;
     public Transform attackPoint;
@@ -229,7 +229,7 @@ public class BossController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (currentHealth <= 0) return;
 
@@ -249,7 +249,7 @@ public class BossController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 
-    public int GetCurrentHealth()
+    public float GetCurrentHealth()
     {
         return currentHealth;
     }

@@ -7,13 +7,13 @@ public class EnemyDropItem : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void DropItem()
@@ -28,7 +28,7 @@ public class EnemyDropItem : MonoBehaviour
         int randomIndex = Random.Range(0, items.Length);
         GameObject selectedItem = items[randomIndex];
         float selectedDropChance = dropChances[randomIndex];
-        Debug.Log("Selected item to drop: " +  selectedItem.name);
+        Debug.Log("Selected item to drop: " + selectedItem.name);
 
 
         //Random để quyết định có drop hay không
@@ -38,6 +38,13 @@ public class EnemyDropItem : MonoBehaviour
             Vector3 spawnPos = transform.position; // Spawnpos = enemy pos
 
             Instantiate(selectedItem, spawnPos, Quaternion.identity);
+
+            Debug.Log("Drop Item Successfully");
+        }
+        else
+        {
+            Debug.Log("Drop Item Failed");
+
         }
     }
 }
