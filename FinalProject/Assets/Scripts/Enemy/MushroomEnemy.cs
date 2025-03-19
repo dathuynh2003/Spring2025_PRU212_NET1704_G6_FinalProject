@@ -25,6 +25,9 @@ public class MushroomEnemy : MonoBehaviour
     public Transform attackPoint;
     public float attackRadius = 1f;
 
+    public LayerMask playerLayer;
+    public float explodeRadius = 2f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -52,6 +55,14 @@ public class MushroomEnemy : MonoBehaviour
                 startPosition = transform.position;
             }
             return; // Không di chuyển trong trạng thái đứng yên
+        }
+
+        // Kiểm tra nếu player ở gần thì phát nổ
+        Collider2D player = Physics2D.OverlapCircle(transform.position, explodeRadius, playerLayer);
+        if (player != null)
+        {
+            Die(); // Kích hoạt nổ
+            return;
         }
 
         // Di chuyển enemy
@@ -156,16 +167,20 @@ public class MushroomEnemy : MonoBehaviour
         // Ẩn enemy thay vì hủy ngay lập tức
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
-        // Hủy enemy sau 4 giây (đảm bảo hiệu ứng nổ hiển thị xong)
-        Destroy(gameObject, 4f);
+        // Hủy enemy sau 2 giây (đảm bảo hiệu ứng nổ hiển thị xong)
+        Destroy(gameObject, 2f);
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (attackPoint == null)
+        if (attackPoint != null)
         {
-            return;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
         }
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+
+        // Vẽ bán kính phát nổ
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, explodeRadius);
     }
 }
