@@ -5,7 +5,7 @@ AssetOrigin:
   productId: 167949
   packageName: Monsters_Creatures_Fantasy
   packageVersion: 1.0
-  assetPath: Assets/Monsters Creatures Fantasy/Sprites/Mushroom/Take Hit.png
+  assetPath: Assets/Sprites/Monsters Creatures Fantasy/Sprites/Mushroom/Take Hit.png
   uploadId: 365724
 TextureImporter:
   internalIDToNameTable:
@@ -67,7 +67,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 30
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -158,10 +158,10 @@ TextureImporter:
       name: Take Hit_0
       rect:
         serializedVersion: 2
-        x: 64
-        y: 49
-        width: 23
-        height: 37
+        x: 0
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,10 +180,10 @@ TextureImporter:
       name: Take Hit_1
       rect:
         serializedVersion: 2
-        x: 214
-        y: 49
-        width: 23
-        height: 37
+        x: 150
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,10 +202,10 @@ TextureImporter:
       name: Take Hit_2
       rect:
         serializedVersion: 2
-        x: 344
-        y: 49
-        width: 37
-        height: 42
+        x: 300
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,10 +224,10 @@ TextureImporter:
       name: Take Hit_3
       rect:
         serializedVersion: 2
-        x: 499
-        y: 49
-        width: 34
-        height: 43
+        x: 450
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

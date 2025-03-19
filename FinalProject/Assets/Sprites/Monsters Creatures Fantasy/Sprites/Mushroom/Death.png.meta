@@ -5,7 +5,7 @@ AssetOrigin:
   productId: 167949
   packageName: Monsters_Creatures_Fantasy
   packageVersion: 1.0
-  assetPath: Assets/Monsters Creatures Fantasy/Sprites/Mushroom/Death.png
+  assetPath: Assets/Sprites/Monsters Creatures Fantasy/Sprites/Mushroom/Death.png
   uploadId: 365724
 TextureImporter:
   internalIDToNameTable:
@@ -67,7 +67,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 30
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -158,10 +158,10 @@ TextureImporter:
       name: Death_0
       rect:
         serializedVersion: 2
-        x: 64
-        y: 49
-        width: 23
-        height: 37
+        x: 0
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,10 +180,10 @@ TextureImporter:
       name: Death_1
       rect:
         serializedVersion: 2
-        x: 215
-        y: 49
-        width: 26
-        height: 37
+        x: 150
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,10 +202,10 @@ TextureImporter:
       name: Death_2
       rect:
         serializedVersion: 2
-        x: 369
-        y: 49
-        width: 23
-        height: 26
+        x: 300
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,10 +224,10 @@ TextureImporter:
       name: Death_3
       rect:
         serializedVersion: 2
-        x: 519
-        y: 49
-        width: 23
-        height: 27
+        x: 450
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

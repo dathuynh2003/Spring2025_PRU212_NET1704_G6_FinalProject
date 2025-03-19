@@ -5,7 +5,7 @@ AssetOrigin:
   productId: 167949
   packageName: Monsters_Creatures_Fantasy
   packageVersion: 1.0
-  assetPath: Assets/Monsters Creatures Fantasy/Sprites/Mushroom/Run.png
+  assetPath: Assets/Sprites/Monsters Creatures Fantasy/Sprites/Mushroom/Run.png
   uploadId: 365724
 TextureImporter:
   internalIDToNameTable:
@@ -79,7 +79,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 30
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -170,10 +170,10 @@ TextureImporter:
       name: Run_0
       rect:
         serializedVersion: 2
-        x: 62
-        y: 52
-        width: 25
-        height: 36
+        x: 0
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,10 +192,10 @@ TextureImporter:
       name: Run_1
       rect:
         serializedVersion: 2
-        x: 213
-        y: 49
-        width: 24
-        height: 37
+        x: 150
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,10 +214,10 @@ TextureImporter:
       name: Run_2
       rect:
         serializedVersion: 2
-        x: 364
-        y: 50
-        width: 23
-        height: 37
+        x: 300
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +236,10 @@ TextureImporter:
       name: Run_3
       rect:
         serializedVersion: 2
-        x: 514
-        y: 52
-        width: 23
-        height: 36
+        x: 450
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,10 +258,10 @@ TextureImporter:
       name: Run_4
       rect:
         serializedVersion: 2
-        x: 664
-        y: 49
-        width: 24
-        height: 37
+        x: 600
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,10 +280,10 @@ TextureImporter:
       name: Run_5
       rect:
         serializedVersion: 2
-        x: 814
-        y: 49
-        width: 23
-        height: 37
+        x: 750
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,10 +302,10 @@ TextureImporter:
       name: Run_6
       rect:
         serializedVersion: 2
-        x: 964
-        y: 50
-        width: 23
-        height: 37
+        x: 900
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,10 +324,10 @@ TextureImporter:
       name: Run_7
       rect:
         serializedVersion: 2
-        x: 1114
-        y: 52
-        width: 24
-        height: 36
+        x: 1050
+        y: 0
+        width: 150
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
