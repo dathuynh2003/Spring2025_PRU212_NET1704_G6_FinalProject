@@ -9,14 +9,14 @@ public class BossController : MonoBehaviour
     private Rigidbody2D body;
     private bool isAttacking = false;
     private bool isMovingToPlayer = false;
-    public int maxHealth = 30;
-    private int currentHealth;
+    public float maxHealth = 30;
+    private float currentHealth;
     private bool isGrounded = false;
     public int attackDamage = 1;
     public Transform attackPoint;
     public float attackRadius = 1f;
     public LayerMask playerLayer;
-    public float attackDelay = 3f; // Để dễ test hơn, bạn có thể tăng lên 10f sau
+    public float attackDelay = 10f; // Để dễ test hơn, bạn có thể tăng lên 10f sau
     private bool isDead = false;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip bossStart;
@@ -26,6 +26,11 @@ public class BossController : MonoBehaviour
     [SerializeField] private AudioClip idleSound;
     [SerializeField] private AudioClip dieSound;
     [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip angrySound;
+    [SerializeField] private AudioClip sumonSound;
+    [SerializeField] private Transform[] spawnPoints; // Các điểm spawn enemy
+    [SerializeField] private GameObject[] enemyPrefabs; // Các loại quái khác nhau
+    [SerializeField] private GameObject summonEffect; // Hiệu ứng triệu hồi
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
@@ -47,6 +52,10 @@ public class BossController : MonoBehaviour
         // Bắt đầu chu trình hành động
 
         PlaySound(bossStart);
+
+        // Triệu hồi quái vật khi trận đấu bắt đầu
+        SummonEnemies();
+
         StartCoroutine(BossActionLoop());
     }
 
@@ -73,13 +82,21 @@ public class BossController : MonoBehaviour
     private IEnumerator BossActionLoop()
     {
 
+
         while (!isDead)
         {
-            yield return new WaitForSeconds(attackDelay);
+           
 
+            // Nếu máu Boss dưới 50%, giảm thời gian delay tấn công
+            float currentAttackDelay = (currentHealth < maxHealth / 2) ? attackDelay / 2 : attackDelay;
+            yield return new WaitForSeconds(0.8f);
             // Move towards player
             isMovingToPlayer = true;
             anim.SetBool("boss_run", true);
+            if (player == null)
+            {
+                break;
+            }
             while (Vector2.Distance(attackPoint.position, player.position) > attackRadius)
             {
 
@@ -103,7 +120,7 @@ public class BossController : MonoBehaviour
             else Attack();
 
             // Đợi thời gian delay trước khi lặp lại
-            yield return new WaitForSeconds(attackDelay);
+            yield return new WaitForSeconds(currentAttackDelay);
         }
     }
 
@@ -170,9 +187,12 @@ public class BossController : MonoBehaviour
         PlaySound(dieSound);
         body.linearVelocity = Vector2.zero;
         Debug.Log("Boss die");
-       // GetComponent<Collider2D>().enabled = false;
+        // GetComponent<Collider2D>().enabled = false;
+
         StopAllCoroutines();
         Destroy(gameObject, 2f);
+
+        player.gameObject.GetComponent<KnightController>().Victory();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -195,7 +215,7 @@ public class BossController : MonoBehaviour
 
             if (knightController != null)
             {
-                Debug.Log("Player nhận sát thương!");
+                //Debug.Log("Player nhận sát thương!");
                 knightController.TakeDame(attackDamage);
             }
             else if (dragon != null)
@@ -210,13 +230,18 @@ public class BossController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (currentHealth <= 0) return;
 
         currentHealth -= damage;
         Debug.Log("Current health boss: " + currentHealth);
-
+        if (currentHealth <= maxHealth / 2 )
+        {
+           // hasEnraged = true; // Đánh dấu đã tức giận
+            PlaySound(angrySound); // Phát âm thanh tức giận
+            Debug.Log("Boss trở nên tức giận!");
+        }
         if (currentHealth <= 0)
         {
             Die();
@@ -230,7 +255,7 @@ public class BossController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 
-    public int GetCurrentHealth()
+    public float GetCurrentHealth()
     {
         return currentHealth;
     }
@@ -259,6 +284,26 @@ public class BossController : MonoBehaviour
         if (audioSource.isPlaying && audioSource.clip == runSound)
         {
             audioSource.Stop();
+        }
+    }
+
+
+    void SummonEnemies()
+    {
+        if (spawnPoints.Length == 0 || enemyPrefabs.Length == 0) return;
+
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            // Kiểm tra nếu mảng enemyPrefabs có đủ phần tử
+            if (i < enemyPrefabs.Length && spawnPoints[i] != null && enemyPrefabs[i] != null)
+            {
+
+                // Tạo hiệu ứng triệu hồi
+                GameObject effect = Instantiate(summonEffect, spawnPoints[i].position, Quaternion.identity);
+                Destroy(effect, 1f); 
+                PlaySound(sumonSound);
+                Instantiate(enemyPrefabs[i], spawnPoints[i].position, Quaternion.identity);
+            }
         }
     }
 }
