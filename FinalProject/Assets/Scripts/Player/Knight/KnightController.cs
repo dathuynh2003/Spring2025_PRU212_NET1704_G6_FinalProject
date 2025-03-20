@@ -257,7 +257,7 @@ public class KnightController : MonoBehaviour, IPlayerStats
     public void SetCurHealth(float value)
     {
         currentHealth = value;
-
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Trap")) // Nếu va chạm với bẫy (chưa làm bẫy)
@@ -285,3 +285,4 @@ public class KnightController : MonoBehaviour, IPlayerStats
         moveSpeed = 5f; // Trả lại tốc độ di chuyển
     }
 }
+

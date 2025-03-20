@@ -130,6 +130,7 @@ public class SkeletonController : MonoBehaviour
                 animator.SetTrigger("Attack_1");
                 attack1Timer = attack1Cooldown;
             }
+            Debug.Log("Tesst");
         }
     }
 

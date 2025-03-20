@@ -173,7 +173,7 @@ MonoBehaviour:
   idleSound: {fileID: 0}
   dieSound: {fileID: 0}
   jumpSound: {fileID: 8300000, guid: 7e535648cce0bb04f92e288c1190ff77, type: 3}
-  attackSound: {fileID: 8300000, guid: 628648adf0614e745b3302aa73bcfbdf, type: 3}
+  attackSound: {fileID: 8300000, guid: f4409dcf65109b9478a90ee5b29cf859, type: 3}
   victorySound: {fileID: 8300000, guid: dd4a7b6c48269d94388cc81d2dbee470, type: 3}
   runSound: {fileID: 8300000, guid: 773e688359dfee3428dbdfa51b3f6965, type: 3}
   hurtSound: {fileID: 0}

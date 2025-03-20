@@ -72,6 +72,6 @@ public class CharacterSelectUI : MonoBehaviour
     void OnPlayClicked()
     {
         Debug.Log("Play Clicked! Loading MainGameScene...");
-        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("Story1", LoadSceneMode.Single);
     }
 }
