@@ -7,7 +7,7 @@ public class Fireball : MonoBehaviour
     private Rigidbody2D myBody;
 
     private float maxX;
-    public int damage = 1;
+    public int damage;
     private int direction = 1;
 
     private void Awake()
@@ -53,15 +53,30 @@ public class Fireball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Ground"))
         {
-            MushroomEnemy enemy = collision.GetComponent<MushroomEnemy>();
-            if (enemy != null)
+            MushroomEnemy mushroomEnemy = collision.GetComponent<MushroomEnemy>();
+            BossController bossEnemy = collision.GetComponent<BossController>();
+            FlyingEye flyingEye = collision.GetComponent<FlyingEye>();
+            if (mushroomEnemy != null)
             {
-                enemy.TakeDamage(damage); 
+                mushroomEnemy.TakeDamage(damage); 
+            } 
+            else if (bossEnemy != null)
+            {
+                bossEnemy.TakeDamage(damage);
+            }
+            else if (flyingEye != null)
+            {
+                flyingEye.TakeDame(damage);
             }
 
             Destroy(gameObject); 
         }
+    }
+
+    public void SetDamage(int dmg)
+    {
+        damage = dmg;
     }
 }

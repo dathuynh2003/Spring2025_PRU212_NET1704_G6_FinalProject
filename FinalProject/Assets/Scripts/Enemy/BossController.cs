@@ -233,7 +233,7 @@ public class BossController : MonoBehaviour
             else if (dragon != null)
             {
                 Debug.Log("Dragon nhận sát thương!");
-                // dragon.TakeDame(attackDamage);
+                dragon.TakeDame(attackDamage);
             }
         }
         else
