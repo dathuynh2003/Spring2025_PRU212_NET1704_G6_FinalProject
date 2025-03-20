@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   player: {fileID: 0}
-  maxHealth: 5
+  maxHealth: 100
   attackDamage: 1
   attackPoint: {fileID: 5302279562223452706}
   attackRadius: 1.15
@@ -176,6 +176,7 @@ MonoBehaviour:
   jumpSound: {fileID: 0}
   angrySound: {fileID: 8300000, guid: d2c4de007f9f38549bbdbfcb09620a3c, type: 3}
   sumonSound: {fileID: 0}
+  bossHurtSound: {fileID: 8300000, guid: a32661479e87c9944aecbf76a6aa79ba, type: 3}
   spawnPoints: []
   enemyPrefabs: []
   summonEffect: {fileID: 0}

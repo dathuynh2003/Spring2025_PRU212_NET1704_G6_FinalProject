@@ -27,6 +27,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip angrySound;
     [SerializeField] private AudioClip sumonSound;
+    [SerializeField] private AudioClip bossHurtSound;
     [SerializeField] private Transform[] spawnPoints; // Các điểm spawn enemy
     [SerializeField] private GameObject[] enemyPrefabs; // Các loại quái khác nhau
     [SerializeField] private GameObject summonEffect; // Hiệu ứng triệu hồi
@@ -226,9 +227,11 @@ public class BossController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if (currentHealth <= 0) return;
-
+        anim.SetTrigger("boss_take_hit");
+        PlaySound(bossHurtSound);
         currentHealth -= damage;
         Debug.Log("Current health boss: " + currentHealth);
+
         if (currentHealth <= maxHealth / 2 )
         {
            // hasEnraged = true; // Đánh dấu đã tức giận
