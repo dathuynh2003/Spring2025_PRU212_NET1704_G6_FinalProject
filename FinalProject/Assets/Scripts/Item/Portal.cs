@@ -6,6 +6,7 @@ public class Portal : MonoBehaviour
     public GameObject portalOff; // Cổng đóng
     public bool isActivated = false; // Trạng thái cổng
     private Collider2D portalCollider; // Collider của cổng
+    public string currentMap;
 
     void Start()
     {
@@ -26,9 +27,18 @@ public class Portal : MonoBehaviour
     {
         if (isActivated && other.CompareTag("Player"))
         {
-            Debug.Log("Player đi qua cổng!");
-            // Chuyển sang màn tiếp theo
-            UnityEngine.SceneManagement.SceneManager.LoadScene("NextScene");
+            if (currentMap.Contains("Map1"))
+            {
+                Debug.Log("Player đi qua map 2!");
+                // Chuyển sang màn tiếp theo
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Story2");
+            }
+            if (currentMap.Contains("Map2"))
+            {
+                Debug.Log("Player đi qua map 3!");
+                // Chuyển sang màn tiếp theo
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Story3");
+            }
         }
     }
 }

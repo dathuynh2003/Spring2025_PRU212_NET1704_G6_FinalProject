@@ -13,6 +13,7 @@ public class SpecialItem : MonoBehaviour
         {
             isCollected = true;
             portal.ActivatePortal(); // Mở cổng
+            portal.currentMap = itemName; // Lưu tên map hiện tại
             CollectItem();
         }
     }

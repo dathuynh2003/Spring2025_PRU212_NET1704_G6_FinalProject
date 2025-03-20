@@ -976,13 +976,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_Map1
       objectReference: {fileID: 0}
+    - target: {fileID: 2333425220681988200, guid: 3b8cf1d485b668c44a6fb4ca489e72c2, type: 3}
+      propertyPath: portal
+      value: 
+      objectReference: {fileID: 1883131903}
     - target: {fileID: 2765982509550716512, guid: 3b8cf1d485b668c44a6fb4ca489e72c2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 38.96991
+      value: 27.95
       objectReference: {fileID: 0}
     - target: {fileID: 2765982509550716512, guid: 3b8cf1d485b668c44a6fb4ca489e72c2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.1881967
+      value: -2.61
       objectReference: {fileID: 0}
     - target: {fileID: 2765982509550716512, guid: 3b8cf1d485b668c44a6fb4ca489e72c2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6591,6 +6595,17 @@ Transform:
   - {fileID: 1094417664}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1883131903 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1679490031702899116, guid: 166d9947ad9d1444495a21444a79cce1, type: 3}
+  m_PrefabInstance: {fileID: 1340405846262821800}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e116040660c2a4546b6a5167b31823c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1936194973
 GameObject:
   m_ObjectHideFlags: 0
@@ -7019,17 +7034,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4804192066456639313, guid: bc85234a94f24c643a8bc3ccdfd35a5f, type: 3}
-      propertyPath: jumpHeight
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 7674329234355181650, guid: bc85234a94f24c643a8bc3ccdfd35a5f, type: 3}
       propertyPath: m_Name
       value: Knight_Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7674329234355181650, guid: bc85234a94f24c643a8bc3ccdfd35a5f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8414233304869219262, guid: bc85234a94f24c643a8bc3ccdfd35a5f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7244,21 +7251,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1679490031702899116, guid: 166d9947ad9d1444495a21444a79cce1, type: 3}
-      propertyPath: isActivated
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5928252611518257235, guid: 166d9947ad9d1444495a21444a79cce1, type: 3}
       propertyPath: m_Name
       value: Portal
       objectReference: {fileID: 0}
     - target: {fileID: 6055501718014457827, guid: 166d9947ad9d1444495a21444a79cce1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 41.53
+      value: 37.68
       objectReference: {fileID: 0}
     - target: {fileID: 6055501718014457827, guid: 166d9947ad9d1444495a21444a79cce1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.79
+      value: -2.94
       objectReference: {fileID: 0}
     - target: {fileID: 6055501718014457827, guid: 166d9947ad9d1444495a21444a79cce1, type: 3}
       propertyPath: m_LocalPosition.z
