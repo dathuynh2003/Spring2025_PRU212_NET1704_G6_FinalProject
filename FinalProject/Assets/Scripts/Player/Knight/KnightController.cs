@@ -110,48 +110,26 @@ public class KnightController : MonoBehaviour, IPlayerStats
         if (colliAttack)
         {
             Debug.Log(colliAttack.gameObject.name + " takes dame");
-            if (colliAttack.gameObject.name == "Boss_Enemy")
+            if (colliAttack.gameObject.name.Contains("Boss"))
             {
                 var boss = colliAttack.GetComponent<BossController>();
                 boss.TakeDamage(currentDame);
-            } else if (colliAttack.gameObject.name == "FlyingEye")
+            } else if (colliAttack.gameObject.name.Contains("FlyingEye"))
             {
                 var enemy = colliAttack.GetComponent<FlyingEye>();
                 enemy.TakeDame(currentDame);
-            } else if (colliAttack.gameObject.name == "Skeleton_Enemy")
+            } else if (colliAttack.gameObject.name.Contains("Skeleton_Enemy"))
             {
                 var enemy = colliAttack.GetComponent<SkeletonController>();
                 enemy.TakeDame(currentDame);
             }
-            else if (colliAttack.gameObject.name == "Goblin_Enemy")
+            else if (colliAttack.gameObject.name.Contains("Goblin_Enemy"))
             {
                 var enemy = colliAttack.GetComponent<GoblinController>();
                 enemy.TakeDame(currentDame);
             }
         }
     }
-    //public void Attack()
-    //{
-    //    Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius, attackLayer);
-    //    foreach (Collider2D enemy in hitEnemies)
-    //    {
-    //        // Kiểm tra từng loại enemy và gọi TakeDamage()
-    //        if (enemy.TryGetComponent<BossController>(out BossController boss))
-    //        {
-
-    //            boss.TakeDamage(1);
-    //            Debug.Log("Player đã trừ máu Boss! Máu còn lại: " + boss.GetCurrentHealth());
-    //        }
-    //        //else if (enemy.TryGetComponent<GoblinController>(out GoblinController goblin))
-    //        //{
-    //        //    goblin.TakeDamage(1);
-    //        //}
-    //        //else if (enemy.TryGetComponent<OrcController>(out OrcController orc))
-    //        //{
-    //        //    orc.TakeDamage(1);
-    //        //}
-    //    }
-    //}
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
