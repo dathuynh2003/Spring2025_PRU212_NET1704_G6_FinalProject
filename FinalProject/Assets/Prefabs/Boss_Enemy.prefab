@@ -110,7 +110,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -803321122, guid: 836ba81373ddf664c8a192783efe0ecd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -157,7 +157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  player: {fileID: 0}
   maxHealth: 100
   attackDamage: 1
   attackPoint: {fileID: 5302279562223452706}
@@ -165,7 +164,6 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  attackDelay: 2
   audioSource: {fileID: 397175647465280613}
   bossStart: {fileID: 8300000, guid: df30b5dccab3522428f35e1127a74593, type: 3}
   attack1Sound: {fileID: 8300000, guid: 9cb6fd01263e1184282ed6fbb52b0e03, type: 3}
@@ -175,11 +173,24 @@ MonoBehaviour:
   dieSound: {fileID: 8300000, guid: e19a4fd92e38ad1479fffffec925cff6, type: 3}
   jumpSound: {fileID: 0}
   angrySound: {fileID: 8300000, guid: d2c4de007f9f38549bbdbfcb09620a3c, type: 3}
-  sumonSound: {fileID: 0}
+  sumonSound: {fileID: 8300000, guid: 4f2e5cb622ebc404eb8f1d89579f1cfe, type: 3}
   bossHurtSound: {fileID: 8300000, guid: a32661479e87c9944aecbf76a6aa79ba, type: 3}
-  spawnPoints: []
-  enemyPrefabs: []
-  summonEffect: {fileID: 0}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  enemyPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  summonEffect: {fileID: 4339874464747564443, guid: 40915819e741c0d49821ded656abb79a, type: 3}
+  detectionRadius: 8
+  enrageSpeedMultiplier: 1.5
+  enrageAttackDelayMultiplier: 0.7
+  postAttackRestTime: 2
+  playerManager: {fileID: 0}
 --- !u!61 &1180426748081323757
 BoxCollider2D:
   m_ObjectHideFlags: 0
