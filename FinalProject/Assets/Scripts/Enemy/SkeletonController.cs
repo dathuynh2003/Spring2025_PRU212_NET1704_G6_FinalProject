@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
 public class SkeletonController : MonoBehaviour
 {
+    [SerializeField] private AudioSource audioSource;
     public float maxHealth = 3;
     private float currentHealth;
 
@@ -208,5 +210,13 @@ public class SkeletonController : MonoBehaviour
         // Disable this script
         this.enabled = false;
         Destroy(gameObject, 2f);  // Destroy enemy after 2 seconds
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }
