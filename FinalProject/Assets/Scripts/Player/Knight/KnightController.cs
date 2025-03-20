@@ -100,6 +100,11 @@ public class KnightController : MonoBehaviour
                 var enemy = colliAttack.GetComponent<SkeletonController>();
                 enemy.TakeDame(currentDame);
             }
+            else if (colliAttack.gameObject.name == "Goblin_Enemy")
+            {
+                var enemy = colliAttack.GetComponent<GoblinController>();
+                enemy.TakeDame(currentDame);
+            }
         }
     }
     //public void Attack()

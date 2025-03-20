@@ -17,7 +17,7 @@ public class SkeletonController : MonoBehaviour
 
     public bool facingLeft = true;
 
-    public float detectionRadius = 5f;
+    public float detectionRadius = 3f;
     public LayerMask playerLayer;
     private Transform playerTarget;
 
