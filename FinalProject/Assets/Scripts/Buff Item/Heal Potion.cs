@@ -32,11 +32,14 @@ public class HealPotion : MonoBehaviour
                 Debug.Log("Player healed for " + healAmount + " HP");
 
                 // Sau khi heal xong thì biến mất
-                Destroy(gameObject, sound.length);
+                Destroy(gameObject);
             }
             if (dragonPlayer != null)
             {
-                Debug.Log("Dragonheal");
+                PlaySound(sound);
+                float healAmount = dragonPlayer.maxHealth * healAmountPercent;
+                dragonPlayer.Heal(healAmount);
+                Destroy(gameObject);
             }
         }
     }

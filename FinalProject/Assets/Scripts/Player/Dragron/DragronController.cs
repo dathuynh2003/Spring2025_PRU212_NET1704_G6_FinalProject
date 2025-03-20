@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DragronController : MonoBehaviour, IPlayerStats
 {
@@ -7,7 +8,7 @@ public class DragronController : MonoBehaviour, IPlayerStats
     public float maxHealth = 5;
     public float jumpHeight = 15f;
     public float currentHealth;
-    private float moveSpeed = 5f;
+    public float moveSpeed = 5f;
     private float move;
     private bool isGrounded = true;
 
@@ -299,5 +300,22 @@ public class DragronController : MonoBehaviour, IPlayerStats
     public void SetDame(float value)
     {
         throw new System.NotImplementedException();
+    }
+    public void buffDame(float dameIncrease)
+    {
+        //  PlaySound(boostDame);
+        currentDame += dameIncrease;
+    }
+    public void Heal(float healAmount)
+    {
+        // PlaySound(boostHealth);
+        currentHealth = (currentHealth + healAmount > maxHealth) ? maxHealth : currentHealth + healAmount;
+        Debug.Log("Player HP: " + currentHealth);
+    }
+
+    public void DestroyPlayer()
+    {
+        Destroy(gameObject);
+        SceneManager.LoadScene("LoseScene");
     }
 }

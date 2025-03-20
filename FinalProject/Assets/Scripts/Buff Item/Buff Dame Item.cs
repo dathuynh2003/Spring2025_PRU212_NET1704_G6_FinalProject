@@ -32,11 +32,12 @@ public class BuffDameItem : MonoBehaviour
                 knightPlayer.buffDame(dameIncrease);
 
                 Debug.Log("Player increase " + dameIncrease + " dame(s)");
-                Destroy(gameObject, sound.length);
+                Destroy(gameObject);
             }
             if (dragonPlayer != null)
             {
-                Debug.Log("Dragon increase dames");
+                dragonPlayer.buffDame(dameIncrease);
+                Destroy(gameObject);
             }
         }
     }
