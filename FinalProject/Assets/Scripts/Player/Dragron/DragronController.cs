@@ -165,6 +165,17 @@ public class DragronController : MonoBehaviour, IPlayerStats
                 var enemy = colliAttack.GetComponent<MushroomEnemy>();
                 enemy.TakeDamage((int)currentDame);
             }
+            else if (colliAttack.gameObject.name == "Goblin_Enemy")
+            {
+                var enemy = colliAttack.GetComponent<GoblinController>();
+                enemy.TakeDame(currentDame);
+            }
+            else if (colliAttack.gameObject.name == "Skeleton_Enemy")
+            {
+                var enemy = colliAttack.GetComponent<SkeletonController>();
+                enemy.TakeDame(currentDame);
+            }
+            
         }
     }
 
