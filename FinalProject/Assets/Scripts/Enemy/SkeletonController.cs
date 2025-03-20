@@ -1,100 +1,212 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SkeletonController : MonoBehaviour
 {
-    public int maxHealth = 3;
-    public bool facingLeft = true;
-    public float moveSpeed = 2f;
-    public Transform checkPoint;
-    public float distance = 1f;
-    public LayerMask layerMask;
-    public bool inRange = false;
-    public Transform player;
-    public float attackRange = 10f;
-    public float retrieveDistance = 2.5f;
-    public float chaseSpeed = 4f;
-    public Animator animator;
+    public float maxHealth = 3;
+    private float currentHealth;
 
+    public float moveSpeed = 2f;
+    public float attack2Speed = 5f;
+    public float chaseSpeed = 4f;
+
+    public float dameAttack1 = 1f;
+    public float dameAttack2 = 3f;
+
+    private Animator animator;
+    private Rigidbody2D rb;
+
+    public bool facingLeft = true;
+
+    public float detectionRadius = 3f;
+    public LayerMask playerLayer;
+    private Transform playerTarget;
+
+    private bool isAttacking = false;
+    private bool hasUsedAttack2 = false;
+    public float attack1Cooldown = 2f;
+    private float attack1Timer;
+
+    public Transform pointA;
+    public Transform pointB;
+    private Transform targetPoint;
+
+    private Vector2 attackPosition;
     public Transform attackPoint;
-    public float attackRadius = 1f;
-    public LayerMask attackLayer;
+    public float attackRadius = 0.5f;
+
+    public float distance = 1f;
 
     void Start()
     {
-        
+        targetPoint = pointA;
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
+        attack1Timer = attack1Cooldown;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Vector2.Distance(transform.position, player.position) <= attackRange)
+        if (currentHealth <= 0)
         {
-            inRange = true;
-
+            Die();
+            return;
         }
-        if (inRange)
+
+        if (!isAttacking)
         {
-            if (player.position.x > transform.position.x && facingLeft == true)
+            MoveBetweenPoints();
+            DetectPlayer();
+        }
+        else
+        {
+            if (!hasUsedAttack2)
             {
-                transform.eulerAngles = new Vector3 (0, -180, 0);
-                facingLeft = false;
+                Attack2Charge();
             }
-            else if (player.position.x < transform.position.x && facingLeft == false)
+            else
             {
-                transform.eulerAngles = new Vector3(0, 0, 0);
+                HandleAttack1();
+            }
+        }
+
+        SmoothRotate();
+    }
+
+    void SmoothRotate()
+    {
+        float targetYRotation = facingLeft ? 180f : 0f;
+
+        if (playerTarget != null)
+        {
+            facingLeft = (playerTarget.position.x < transform.position.x);
+            targetYRotation = facingLeft ? 180f : 0f;
+        }
+
+        transform.eulerAngles = new Vector3(0, targetYRotation, 0);
+    }
+
+    void DetectPlayer()
+    {
+        Collider2D hitPlayer = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
+        if (hitPlayer != null)
+        {
+            playerTarget = hitPlayer.transform;
+            attackPosition = playerTarget.position;
+            isAttacking = true;
+            animator.SetTrigger("Attack_1");
+        }
+    }
+
+    void Attack2Charge()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, attackPosition, attack2Speed * Time.deltaTime);
+
+        if (Vector2.Distance(transform.position, attackPosition) < 0.1f)
+        {
+            hasUsedAttack2 = true;
+            attack1Timer = attack1Cooldown;
+        }
+    }
+
+    void HandleAttack1()
+    {
+        attack1Timer -= Time.deltaTime;
+        if (attack1Timer <= 0f)
+        {
+            // Lưu vị trí player để lần sau tấn công tiếp
+            if (playerTarget != null)
+            {
+                attackPosition = playerTarget.position;
+            }
+            // Bay tới vị trí đã lưu
+            transform.position = Vector2.MoveTowards(transform.position, attackPosition, moveSpeed * Time.deltaTime);
+
+            // Khi tới nơi → thực hiện Attack_1
+            if (Vector2.Distance(transform.position, attackPosition) < 1f)
+            {
+                animator.SetTrigger("Attack_1");
+                attack1Timer = attack1Cooldown;
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+    }
+
+    void MoveBetweenPoints()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, targetPoint.position, moveSpeed * Time.deltaTime);
+
+        if (Vector2.Distance(transform.position, targetPoint.position) < 0.1f)
+        {
+            if (targetPoint == pointB)
+            {
+                targetPoint = pointA;
                 facingLeft = true;
             }
-            if (Vector2.Distance(transform.position, player.position) > retrieveDistance)
+            else
             {
-                animator.SetBool("Attack1", false);
-                transform.position = Vector2.MoveTowards(transform.position, player.position, chaseSpeed * Time.deltaTime);
-            } else
-            {
-                animator.SetBool("Attack1",true);
-            }
-        } else
-        {
-            transform.Translate(Vector2.left * Time.deltaTime * moveSpeed);
-            RaycastHit2D hit = Physics2D.Raycast(checkPoint.position, Vector2.down, distance, layerMask);
-
-            if ((!hit) && facingLeft)
-            {
-                transform.eulerAngles = new Vector3(0, -180, 0);
-                facingLeft = false;
-            }
-            else if ((!hit) && (!facingLeft))
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
+                targetPoint = pointB;
                 facingLeft = false;
             }
         }
-       
     }
 
-    public void Attack()
+    public void Attack1DealDame()
     {
-        Collider2D collInfo = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
+        Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, playerLayer);
 
-        if (collInfo != null)
+        if (colliAttack)
         {
-            Debug.Log(collInfo.name);
+            Debug.Log("Attack1: " + colliAttack.gameObject.name + " takes dame");
+            if (colliAttack.gameObject.name == "Knight_Player")
+            {
+                var player = colliAttack.GetComponent<KnightController>();
+                player.TakeDame(dameAttack1);
+            }
         }
     }
 
-    private void OnDrawGizmosSelected()
+    public void Attack2DealDame()
     {
-        if (checkPoint == null)
+        Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, playerLayer);
+
+        if (colliAttack)
+        {
+            if (colliAttack.gameObject.name == "Knight_Player")
+            {
+                var player = colliAttack.GetComponent<KnightController>();
+                player.TakeDame(dameAttack2);
+            }
+        }
+    }
+
+    public void TakeDame(float dame)
+    {
+        if (currentHealth <= 0)
         {
             return;
         }
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(checkPoint.position, Vector2.down * distance);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, attackRange);
+        currentHealth -= dame;
+        animator.SetTrigger("Hurt");
+        Debug.LogFormat("Skeleton remaining health {0}/{1} HP", currentHealth, maxHealth);
+    }
 
-        if (attackPoint == null) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+    public void Die()
+    {
+        animator.SetTrigger("Die");
+        rb.gravityScale = 1f;
+        GetComponent<Collider2D>().isTrigger = false;
+        // Allow Rigidbody to fall freely
+        rb.constraints = RigidbodyConstraints2D.None;
+        // Disable this script
+        this.enabled = false;
+        Destroy(gameObject, 2f);  // Destroy enemy after 2 seconds
     }
 }

@@ -102,6 +102,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healAmountPercent: 0.5
+  audioSource: {fileID: 0}
+  sound: {fileID: 8300000, guid: 0b1ff7d90e8eb4a41bf17aea4a5dacac, type: 3}
 --- !u!61 &1906854978455549202
 BoxCollider2D:
   m_ObjectHideFlags: 0

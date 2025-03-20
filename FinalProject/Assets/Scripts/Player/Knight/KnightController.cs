@@ -6,7 +6,7 @@ public class KnightController : MonoBehaviour, IPlayerStats
     public bool facingRight = true;
 
     public float maxHealth = 5;
-    private float currentHealth;
+    public float currentHealth;
 
     public float baseDame = 2;
     private float currentDame;
@@ -23,6 +23,16 @@ public class KnightController : MonoBehaviour, IPlayerStats
     public float attackRadius = 1f;
     public LayerMask attackLayer;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip idleSound;
+    [SerializeField] private AudioClip dieSound;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip victorySound;
+    [SerializeField] private AudioClip runSound;
+    [SerializeField] private AudioClip hurtSound;
+   // [SerializeField] private AudioClip boostHealth;
+  //  [SerializeField] private AudioClip boostDame;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -36,6 +46,7 @@ public class KnightController : MonoBehaviour, IPlayerStats
     {
         if (currentHealth <= 0)
         {
+            PlaySound(dieSound);
             Die();
         }
 
@@ -46,6 +57,7 @@ public class KnightController : MonoBehaviour, IPlayerStats
         {
             if (movement < 0 && facingRight)
             {
+
                 transform.eulerAngles = new Vector3(0, -180, 0);
                 facingRight = false;
             } 
@@ -55,15 +67,25 @@ public class KnightController : MonoBehaviour, IPlayerStats
                 facingRight = true;
             }
             animator.SetBool("isRunning", true);
+            // Kiểm tra nếu runSound chưa phát thì mới phát
+            if (!audioSource.isPlaying || audioSource.clip != runSound)
+            {
+                audioSource.clip = runSound;
+                audioSource.loop = true; // Để nó chạy lặp lại mượt mà
+                audioSource.Play();
+            }
         }
         else
         {
+
             animator.SetBool("isRunning", false);
+            StopRunSound();
         }
 
         // Nhảy
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+
             Jump();
             animator.SetBool("isJumping", true);
         }
@@ -74,7 +96,6 @@ public class KnightController : MonoBehaviour, IPlayerStats
                 animator.SetTrigger("Attack");
         }
     }
-
     private void FixedUpdate()
     {
         //transform.Translate(Vector2.right * moveSpeed * movement * Time.deltaTime);
@@ -84,6 +105,7 @@ public class KnightController : MonoBehaviour, IPlayerStats
 
     public void Attack()
     {
+        PlaySound(attackSound);
         Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
         if (colliAttack)
         {
@@ -95,6 +117,15 @@ public class KnightController : MonoBehaviour, IPlayerStats
             } else if (colliAttack.gameObject.name == "FlyingEye")
             {
                 var enemy = colliAttack.GetComponent<FlyingEye>();
+                enemy.TakeDame(currentDame);
+            } else if (colliAttack.gameObject.name == "Skeleton_Enemy")
+            {
+                var enemy = colliAttack.GetComponent<SkeletonController>();
+                enemy.TakeDame(currentDame);
+            }
+            else if (colliAttack.gameObject.name == "Goblin_Enemy")
+            {
+                var enemy = colliAttack.GetComponent<GoblinController>();
                 enemy.TakeDame(currentDame);
             }
         }
@@ -132,6 +163,7 @@ public class KnightController : MonoBehaviour, IPlayerStats
 
     private void Jump()
     {
+        PlaySound(jumpSound);
         //rb.linearVelocity = new Vector2(rb.linearVelocityX, 10f);
         rb.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
         isGrounded = false;
@@ -170,17 +202,20 @@ public class KnightController : MonoBehaviour, IPlayerStats
 
     public void Heal(float healAmount)
     {
+       // PlaySound(boostHealth);
         currentHealth = (currentHealth + healAmount > maxHealth) ? maxHealth : currentHealth + healAmount;
         Debug.Log("Player HP: " + currentHealth);
     }
 
     public void Victory()
     {
+        PlaySound(victorySound);
         animator.SetTrigger("Win");
     }
 
     public void buffDame(float dameIncrease)
     {
+      //  PlaySound(boostDame);
         currentDame += dameIncrease;
     }
 
@@ -202,5 +237,20 @@ public class KnightController : MonoBehaviour, IPlayerStats
     public void SetDame(float value)
     {
         currentDame = value;
+    }
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
+    private void StopRunSound()
+    {
+        if (audioSource.isPlaying && audioSource.clip == runSound)
+        {
+            audioSource.Stop();
+            audioSource.clip = null; // Xóa clip để tránh xung đột
+        }
     }
 }
