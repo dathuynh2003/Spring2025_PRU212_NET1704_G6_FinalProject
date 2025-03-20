@@ -3,10 +3,12 @@
 public class TrapController : MonoBehaviour
 {
     private Animator animator;
+    [SerializeField] private AudioSource audioSource;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,6 +28,14 @@ public class TrapController : MonoBehaviour
         if (player)
         {
             player.GetComponent<DragronController>()?.TakeDame(1);
+        }
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
         }
     }
 }

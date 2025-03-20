@@ -31,8 +31,8 @@ public class KnightController : MonoBehaviour
     [SerializeField] private AudioClip victorySound;
     [SerializeField] private AudioClip runSound;
     [SerializeField] private AudioClip hurtSound;
-    [SerializeField] private AudioClip boostHealth;
-    [SerializeField] private AudioClip boostDame;
+   // [SerializeField] private AudioClip boostHealth;
+  //  [SerializeField] private AudioClip boostDame;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -194,7 +194,7 @@ public class KnightController : MonoBehaviour
 
     public void Heal(float healAmount)
     {
-        PlaySound(boostHealth);
+       // PlaySound(boostHealth);
         currentHealth = (currentHealth + healAmount > maxHealth) ? maxHealth : currentHealth + healAmount;
         Debug.Log("Player HP: " + currentHealth);
     }
@@ -207,7 +207,7 @@ public class KnightController : MonoBehaviour
 
     public void buffDame(float dameIncrease)
     {
-        PlaySound(boostDame);
+      //  PlaySound(boostDame);
         currentDame += dameIncrease;
     }
 
