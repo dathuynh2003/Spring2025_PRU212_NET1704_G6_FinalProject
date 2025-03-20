@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyingEye
       objectReference: {fileID: 0}
+    - target: {fileID: 8545721949228086217, guid: 75eac0338c0499448aa9b08b64c1a4d7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8736903473161787261, guid: 75eac0338c0499448aa9b08b64c1a4d7, type: 3}
       propertyPath: pointA
       value: 
@@ -748,6 +752,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyingEyePointB
       objectReference: {fileID: 0}
+    - target: {fileID: 8360744834381263100, guid: a63f25068a2681a4a86fcad44c5c649e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -804,6 +812,10 @@ PrefabInstance:
     - target: {fileID: 6799146110843160947, guid: 6a8d2bfbfa5b56a45b2d631f50ba7977, type: 3}
       propertyPath: m_Name
       value: Heal_Potion
+      objectReference: {fileID: 0}
+    - target: {fileID: 6799146110843160947, guid: 6a8d2bfbfa5b56a45b2d631f50ba7977, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2038,6 +2050,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Buff_Dame_Item
       objectReference: {fileID: 0}
+    - target: {fileID: 7434744319901280801, guid: 8b8222f5432b85d4d9ba31e38a61ab5c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2260,13 +2276,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Knight_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7674329234355181650, guid: bc85234a94f24c643a8bc3ccdfd35a5f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8414233304869219262, guid: bc85234a94f24c643a8bc3ccdfd35a5f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.97
+      value: -2.62
       objectReference: {fileID: 0}
     - target: {fileID: 8414233304869219262, guid: bc85234a94f24c643a8bc3ccdfd35a5f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.86
+      value: -1.63
       objectReference: {fileID: 0}
     - target: {fileID: 8414233304869219262, guid: bc85234a94f24c643a8bc3ccdfd35a5f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2581,6 +2601,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyingEyePointA
       objectReference: {fileID: 0}
+    - target: {fileID: 589748123564149806, guid: 2d528b9e2307e2e4dad6422b271bd2f7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6755447929598352521, guid: 2d528b9e2307e2e4dad6422b271bd2f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.002
@@ -2798,11 +2822,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1504692102903453990, guid: bad91647c3848c444b0b87752cd9c0d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.02
+      value: -6.8
       objectReference: {fileID: 0}
     - target: {fileID: 1504692102903453990, guid: bad91647c3848c444b0b87752cd9c0d3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.24
+      value: -2.16
       objectReference: {fileID: 0}
     - target: {fileID: 1504692102903453990, guid: bad91647c3848c444b0b87752cd9c0d3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2856,6 +2880,10 @@ PrefabInstance:
     - target: {fileID: 1406010446471214204, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: m_Name
       value: Boss_Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406010446471214204, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8300555933938532585, guid: ba6197109127ed54ca00d7536e2f536c, type: 3}
       propertyPath: m_LocalPosition.x
