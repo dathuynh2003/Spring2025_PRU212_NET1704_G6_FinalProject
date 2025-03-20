@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 508740335793342014}
   m_Layer: 3
   m_Name: Skeleton_Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 3908245539121852773, guid: b35c22c2b57b11045974685706af8e11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -180,18 +180,20 @@ MonoBehaviour:
   maxHealth: 3
   moveSpeed: 2
   attack2Speed: 5
+  chaseSpeed: 4
   dameAttack1: 1
   dameAttack2: 3
-  pointA: {fileID: 0}
-  pointB: {fileID: 0}
-  attack1Range: 3
-  attack2Range: 1.5
+  facingLeft: 1
+  detectionRadius: 2.4
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
   attack1Cooldown: 2
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
   attackPoint: {fileID: 1887139106417303267}
-  attackRadius: 1
+  attackRadius: 0.8
+  distance: 1
 --- !u!95 &508740335793342014
 Animator:
   serializedVersion: 7

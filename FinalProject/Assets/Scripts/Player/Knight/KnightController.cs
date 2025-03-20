@@ -253,4 +253,31 @@ public class KnightController : MonoBehaviour, IPlayerStats
             audioSource.clip = null; // Xóa clip để tránh xung đột
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Trap")) // Nếu va chạm với bẫy (chưa làm bẫy)
+        {
+            TriggerDizzyEffect();
+        }
+    }
+
+    void TriggerDizzyEffect()
+    {
+        if (animator.GetBool("isDizzy")) return;
+
+        animator.SetTrigger("Dizzy");
+        animator.SetBool("isDizzy", true);
+        // Tạm thời vô hiệu hóa di chuyển
+        moveSpeed = 0;
+
+        // Sau 3 giây, rồng sẽ hết choáng và có thể di chuyển lại
+        Invoke("RecoverFromDizzy", 3f);
+    }
+
+    void RecoverFromDizzy()
+    {
+        animator.SetBool("isDizzy", false);
+        moveSpeed = 5f; // Trả lại tốc độ di chuyển
+    }
 }
