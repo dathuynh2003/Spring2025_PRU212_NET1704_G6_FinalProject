@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
 public class SkeletonController : MonoBehaviour
 {
+    [SerializeField] private AudioSource audioSource;
     public float maxHealth = 3;
     private float currentHealth;
 
@@ -206,7 +208,17 @@ public class SkeletonController : MonoBehaviour
         // Allow Rigidbody to fall freely
         rb.constraints = RigidbodyConstraints2D.None;
         // Disable this script
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
         this.enabled = false;
+        GetComponent<Collider2D>().isTrigger = true;
         Destroy(gameObject, 2f);  // Destroy enemy after 2 seconds
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }

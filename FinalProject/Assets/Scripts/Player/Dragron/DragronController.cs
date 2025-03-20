@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 
-public class DragronController : MonoBehaviour
+public class DragronController : MonoBehaviour, IPlayerStats
 {
     private Animator animator;
     private Rigidbody2D rb;
-    public int maxHealth = 5;
+    public float maxHealth = 5;
+    public float jumpHeight = 15f;
     public float currentHealth;
     private float moveSpeed = 5f;
     private float move;
     private bool isGrounded = true;
+
+    public float baseDame = 2;
+    private float currentDame;
 
     public Transform attackPoint;
     public float attackRadius = 1f;
@@ -18,7 +22,10 @@ public class DragronController : MonoBehaviour
     public float fireRate = 0.2f;
     private float nextFireTime = 0f;
 
-    private bool isDead = false;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip runSound;
+    private bool hasPlayedDizzySound = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,12 +35,14 @@ public class DragronController : MonoBehaviour
 
         animator.ResetTrigger("Dizzy");
         animator.SetBool("isDizzy", false);
+        currentHealth = maxHealth;
+        currentDame = baseDame;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (maxHealth < 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -46,18 +55,25 @@ public class DragronController : MonoBehaviour
             animator.SetBool("isRunning", true);
             transform.Translate(Vector2.right * moveSpeed * move * Time.deltaTime);
             transform.localScale = new Vector3(Mathf.Sign(move), 1, 1); // Đổi hướng nhân vật
+            // Kiểm tra nếu runSound chưa phát thì mới phát
+            if (!audioSource.isPlaying || audioSource.clip != runSound)
+            {
+                audioSource.clip = runSound;
+                audioSource.loop = true; // Để nó chạy lặp lại mượt mà
+                audioSource.Play();
+            }
         }
         else
         {
             animator.SetBool("isRunning", false);
+            StopRunSound();
         }
 
 
         // Nhảy
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocityX, 10f);
-            isGrounded = false;
+            Jump();
             animator.SetBool("isJumping", true);
         }
 
@@ -119,12 +135,56 @@ public class DragronController : MonoBehaviour
             fireballScript.SetDirection(1); // Bắn sang phải
         }
 
+        fireballScript.SetDamage((int)currentDame);
+
+        //Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
+        //Debug.Log(colliAttack);
+        //if (colliAttack)
+        //{
+        //    Debug.Log(colliAttack.gameObject.name + " takes dame");
+        //}
+    }
+
+    public void Attack2()
+    {
         Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
-        Debug.Log(colliAttack);
         if (colliAttack)
         {
             Debug.Log(colliAttack.gameObject.name + " takes dame");
+            if (colliAttack.gameObject.name == "Boss_Enemy")
+            {
+                var boss = colliAttack.GetComponent<BossController>();
+                boss.TakeDamage(currentDame);
+            }
+            else if (colliAttack.gameObject.name == "FlyingEye")
+            {
+                var enemy = colliAttack.GetComponent<FlyingEye>();
+                enemy.TakeDame(currentDame);
+            } else if (colliAttack.gameObject.name == "Mushroom_Enemy")
+            {
+                var enemy = colliAttack.GetComponent<MushroomEnemy>();
+                enemy.TakeDamage((int)currentDame);
+            }
+            else if (colliAttack.gameObject.name == "Goblin_Enemy")
+            {
+                var enemy = colliAttack.GetComponent<GoblinController>();
+                enemy.TakeDame(currentDame);
+            }
+            else if (colliAttack.gameObject.name == "Skeleton_Enemy")
+            {
+                var enemy = colliAttack.GetComponent<SkeletonController>();
+                enemy.TakeDame(currentDame);
+            }
+            
         }
+    }
+
+    private void Jump()
+    {
+        PlaySound(jumpSound);
+        //rb.linearVelocity = new Vector2(rb.linearVelocityX, 10f);
+        rb.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
+        isGrounded = false;
     }
 
     private void OnDrawGizmosSelected()
@@ -136,25 +196,23 @@ public class DragronController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 
-    public void TakeDame(int dame)
+    public void TakeDame(float dame)
     {
-        if (isDead) return; // Nếu đã chết thì không nhận sát thương nữa
 
-        maxHealth -= dame;
+        if (currentHealth <= 0)
+        {
+            return;
+        }
+
+        currentHealth -= dame;
 
         animator.SetTrigger("Hurt");
-
-        if (maxHealth <= 0)
-        {
-            Die();
-        }
     }
 
     void Die()
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Die")) return; // Nếu đã chết thì không làm gì nữa
 
-        isDead = true;
         animator.SetTrigger("Die");
 
         // Ngừng di chuyển và tấn công
@@ -174,6 +232,8 @@ public class DragronController : MonoBehaviour
 
     void TriggerDizzyEffect()
     {
+        if (animator.GetBool("isDizzy")) return;
+
         animator.SetTrigger("Dizzy");
         animator.SetBool("isDizzy", true);
         // Tạm thời vô hiệu hóa di chuyển
@@ -187,5 +247,57 @@ public class DragronController : MonoBehaviour
     {
         animator.SetBool("isDizzy", false);
         moveSpeed = 5f; // Trả lại tốc độ di chuyển
+        hasPlayedDizzySound = false;
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
+
+    public void PlayDizzySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null && !hasPlayedDizzySound)
+        {
+            audioSource.PlayOneShot(clip);
+            hasPlayedDizzySound = true; // Đánh dấu đã phát âm thanh
+        }
+    }
+
+    private void StopRunSound()
+    {
+        if (audioSource.isPlaying && audioSource.clip == runSound)
+        {
+            audioSource.Stop();
+            audioSource.clip = null; // Xóa clip để tránh xung đột
+        }
+    }
+
+    public float GetCurHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public float GetDame()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetCurHealth(float value)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetDame(float value)
+    {
+        throw new System.NotImplementedException();
     }
 }

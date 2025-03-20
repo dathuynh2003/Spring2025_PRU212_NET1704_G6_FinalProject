@@ -1,8 +1,9 @@
 public interface IPlayerStats
 {
-    float GetHealth();
+    float GetCurHealth();
+    float GetMaxHealth();
     float GetDame();
 
-    void SetHealth(float value);
+    void SetCurHealth(float value);
     void SetDame(float value);
 }

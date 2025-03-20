@@ -2,6 +2,7 @@
 
 public class GoblinController : MonoBehaviour
 {
+    [SerializeField] private AudioSource audioSource;
     public float maxHealth = 3;
     private float currentHealth;
 
@@ -48,7 +49,7 @@ public class GoblinController : MonoBehaviour
             FlipTowardsPlayer();
 
             float distanceToPlayer = Vector2.Distance(transform.position, playerTarget.position);
-            Debug.Log("Khoảng cách đến player: " + distanceToPlayer);
+            //Debug.Log("Khoảng cách đến player: " + distanceToPlayer);
 
             if (distanceToPlayer > attackRadius)
             {
@@ -104,9 +105,14 @@ public class GoblinController : MonoBehaviour
         if (colliAttack)
         {
             Debug.Log("Goblin attacks: " + colliAttack.gameObject.name);
-            if (colliAttack.gameObject.name == "Knight_Player")
+            if (colliAttack.gameObject.name.Contains("Knight"))
             {
                 var player = colliAttack.GetComponent<KnightController>();
+                player.TakeDame(attackDamage);
+            }
+            if (colliAttack.gameObject.name.Contains("Dragron"))
+            {
+                var player = colliAttack.GetComponent <DragronController>();
                 player.TakeDame(attackDamage);
             }
         }
@@ -143,5 +149,13 @@ public class GoblinController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }

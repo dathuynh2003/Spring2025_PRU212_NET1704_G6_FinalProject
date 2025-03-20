@@ -29,6 +29,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints; // Các điểm spawn enemy
     [SerializeField] private GameObject[] enemyPrefabs; // Các loại quái khác nhau
     [SerializeField] private GameObject summonEffect; // Hiệu ứng triệu hồi
+    private bool hasSummoned = false; // Kiểm soát việc triệu hồi quái vật
 
     public float detectionRadius = 2f;
     private Transform player;
@@ -43,7 +44,6 @@ public class BossController : MonoBehaviour
     private bool isReturning = false;   // Boss đang quay về
     private Coroutine bossRoutine;      // Lưu coroutine boss hành động
 
-    public PlayerManager playerManager;
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
@@ -58,10 +58,10 @@ public class BossController : MonoBehaviour
 
         // Bắt đầu chu trình hành động
 
-        PlaySound(bossStart);
+        //PlaySound(bossStart);
 
         // Triệu hồi quái vật khi trận đấu bắt đầu
-        SummonEnemies();
+       // SummonEnemies();
     }
 
     void Update()
@@ -88,8 +88,6 @@ public class BossController : MonoBehaviour
 
     private IEnumerator BossActionLoop()
     {
-        if (playerManager != null)
-            playerManager.setCanSwap(false);
 
         while (!isDead)
         {
@@ -233,7 +231,7 @@ public class BossController : MonoBehaviour
             else if (dragon != null)
             {
                 Debug.Log("Dragon nhận sát thương!");
-                // dragon.TakeDame(attackDamage);
+                dragon.TakeDame(attackDamage);
             }
         }
         else
@@ -316,7 +314,7 @@ public class BossController : MonoBehaviour
 
                 // Tạo hiệu ứng triệu hồi
                 GameObject effect = Instantiate(summonEffect, spawnPoints[i].position, Quaternion.identity);
-                Destroy(effect, 1f);
+               // Destroy(effect, 3f);
                 PlaySound(sumonSound);
                 Instantiate(enemyPrefabs[i], spawnPoints[i].position, Quaternion.identity);
             }
@@ -344,6 +342,15 @@ public class BossController : MonoBehaviour
             if (bossRoutine == null)
             {
                 bossRoutine = StartCoroutine(BossActionLoop());
+                PlaySound(bossStart);
+                
+
+                if (!hasSummoned) // Chỉ triệu hồi quái vật 1 lần duy nhất
+                {
+                    hasSummoned = true;
+                    SummonEnemies();
+                    Debug.Log("Boss phát hiện Player. Triệu hồi quái lần đầu tiên!");
+                }
                 Debug.Log("Boss phát hiện Player. Bắt đầu tấn công");
             }
         }
@@ -351,8 +358,6 @@ public class BossController : MonoBehaviour
 
     private IEnumerator ReturnToInitialPosition()
     {
-        if (playerManager != null)
-            playerManager.setCanSwap(true);
         while (true)
         {
             float distance = Vector2.Distance(transform.position, initialPosition);

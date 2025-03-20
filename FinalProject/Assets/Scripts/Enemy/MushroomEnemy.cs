@@ -92,19 +92,6 @@ public class MushroomEnemy : MonoBehaviour
         //{
         //    Flip();
         //}
-
-
-        // Hàm test = nhấn Y
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            Die();
-        }
-
-        // Hàm test = nhấn U
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            animator.SetTrigger("Hurt");
-        }
     }
 
     private void Flip()
@@ -175,8 +162,26 @@ public class MushroomEnemy : MonoBehaviour
             Destroy(explosion, 1f);
         }
 
+        // Gây sát thương cho Player nếu ở trong bán kính nổ
+        Collider2D player = Physics2D.OverlapCircle(transform.position, explodeRadius, playerLayer);
+        if (player != null)
+        {
+            // Giả sử Player có script "PlayerHealth" với hàm "TakeDamage"
+            KnightController knight = player.GetComponent<KnightController>();
+            if (knight != null)
+            {
+                knight.TakeDame(3);
+            }
+            DragronController dragron = player.GetComponent<DragronController>();
+            if (dragron != null)
+            {
+                dragron.TakeDame(3);
+            }
+        }
+
         // Ẩn enemy thay vì hủy ngay lập tức
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().isTrigger = true;
 
         // Hủy enemy sau 2 giây (đảm bảo hiệu ứng nổ hiển thị xong)
         Destroy(gameObject, 2f);
