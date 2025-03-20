@@ -8,22 +8,22 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Image healthBar;
     private void Start()
     {
-        if (knightPlayer != null)
+        if (knightPlayer.isActiveAndEnabled)
         {
             healthBar.fillAmount = knightPlayer.maxHealth / 10f;
         }
-        else if (dragonPlayer != null)
+        else if (dragonPlayer.isActiveAndEnabled)
         {
             healthBar.fillAmount = dragonPlayer.maxHealth / 10f;
         }
     }
     private void Update()
     {
-        if (knightPlayer != null)
+        if (knightPlayer.isActiveAndEnabled)
         {
             healthBar.fillAmount = knightPlayer.currentHealth / 10f;
         }
-        else if (dragonPlayer != null)
+        else if (dragonPlayer.isActiveAndEnabled)
         {
             healthBar.fillAmount = dragonPlayer.currentHealth / 10f;
         }

@@ -20,6 +20,11 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         currentPlayer = Instantiate(knightPlayer, spawnPoint.position, Quaternion.identity);
+        if (cinemachineCamera != null)
+        {
+            cinemachineCamera.Follow = currentPlayer.transform;
+            cinemachineCamera.LookAt = currentPlayer.transform;
+        }
         var stats = currentPlayer.GetComponent<IPlayerStats>();
         if (stats != null)
         {
@@ -121,7 +126,7 @@ public class PlayerManager : MonoBehaviour
         if (currentPlayer.name.Contains("Knight"))
         {
             return knightHealth;
-        } 
+        }
         else
         {
             return dragonHealth;
@@ -136,5 +141,21 @@ public class PlayerManager : MonoBehaviour
     public void setCanSwap(bool value)
     {
         canSwap = value;
+    }
+
+    public float GetCurrentPlayerHeal()
+    {
+        if (currentPlayer.name.Contains("Knight"))
+        {
+            return knightHealth;
+        }
+        else if (currentPlayer.name.Contains("Dragon"))
+        {
+            return dragonHealth;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

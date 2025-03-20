@@ -14,10 +14,9 @@ GameObject:
   - component: {fileID: 8137513586104582792}
   - component: {fileID: 8325249508946876135}
   - component: {fileID: 4412396718415055947}
-  - component: {fileID: 9153627413847891931}
   m_Layer: 6
   m_Name: Dragron
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
+  currentHealth: 0
   attackPoint: {fileID: 3454007336119752334}
   attackRadius: 0.6
   attackLayer:
@@ -208,19 +208,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.81438875, y: 1.3244805}
   m_EdgeRadius: 0
---- !u!114 &9153627413847891931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1662455095062280484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bceab2bb177bcb4dbc00d9d68b4b9a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 5
 --- !u!1 &1723063602368696323
 GameObject:
   m_ObjectHideFlags: 0

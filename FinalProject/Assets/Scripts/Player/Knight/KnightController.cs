@@ -181,7 +181,7 @@ public class KnightController : MonoBehaviour, IPlayerStats
 
     public void TakeDame(float dame)
     {
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             return;
         }

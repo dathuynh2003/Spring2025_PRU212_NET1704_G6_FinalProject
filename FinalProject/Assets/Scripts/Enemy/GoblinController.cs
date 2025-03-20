@@ -48,7 +48,7 @@ public class GoblinController : MonoBehaviour
             FlipTowardsPlayer();
 
             float distanceToPlayer = Vector2.Distance(transform.position, playerTarget.position);
-            Debug.Log("Khoảng cách đến player: " + distanceToPlayer);
+            //Debug.Log("Khoảng cách đến player: " + distanceToPlayer);
 
             if (distanceToPlayer > attackRadius)
             {
@@ -107,6 +107,11 @@ public class GoblinController : MonoBehaviour
             if (colliAttack.gameObject.name == "Knight_Player")
             {
                 var player = colliAttack.GetComponent<KnightController>();
+                player.TakeDame(attackDamage);
+            }
+            if (colliAttack.gameObject.name == "Dragon")
+            {
+                var player = colliAttack.GetComponent <DragronController>();
                 player.TakeDame(attackDamage);
             }
         }

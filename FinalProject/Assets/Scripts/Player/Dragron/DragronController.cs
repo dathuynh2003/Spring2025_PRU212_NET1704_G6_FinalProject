@@ -4,7 +4,7 @@ public class DragronController : MonoBehaviour
 {
     private Animator animator;
     private Rigidbody2D rb;
-    public int maxHealth = 5;
+    public float maxHealth = 5;
     public float currentHealth;
     private float moveSpeed = 5f;
     private float move;
@@ -28,6 +28,8 @@ public class DragronController : MonoBehaviour
 
         animator.ResetTrigger("Dizzy");
         animator.SetBool("isDizzy", false);
+
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -136,18 +138,18 @@ public class DragronController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 
-    public void TakeDame(int dame)
+    public void TakeDame(float dame)
     {
-        if (isDead) return; // Nếu đã chết thì không nhận sát thương nữa
-
-        maxHealth -= dame;
-
-        animator.SetTrigger("Hurt");
 
         if (maxHealth <= 0)
         {
             Die();
+            return;
         }
+
+        currentHealth -= dame;
+
+        animator.SetTrigger("Hurt");
     }
 
     void Die()
