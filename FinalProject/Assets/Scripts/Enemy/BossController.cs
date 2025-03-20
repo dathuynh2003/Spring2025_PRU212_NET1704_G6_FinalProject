@@ -108,6 +108,8 @@ public class BossController : MonoBehaviour
             if (player == null) yield break;
             while (Vector2.Distance(attackPoint.position, player.position) > attackRadius)
             {
+                if (player == null) yield break;
+
                 // Nếu player rời khỏi detectionRadius -> dừng boss
                 //float distanceToPlayer = Vector2.Distance(transform.position, player.position);
                 //if (distanceToPlayer > detectionRadius)
