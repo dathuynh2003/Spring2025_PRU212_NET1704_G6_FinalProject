@@ -23,6 +23,16 @@ public class KnightController : MonoBehaviour
     public float attackRadius = 1f;
     public LayerMask attackLayer;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip idleSound;
+    [SerializeField] private AudioClip dieSound;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip victorySound;
+    [SerializeField] private AudioClip runSound;
+    [SerializeField] private AudioClip hurtSound;
+    [SerializeField] private AudioClip boostHealth;
+    [SerializeField] private AudioClip boostDame;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -36,6 +46,7 @@ public class KnightController : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
+            PlaySound(dieSound);
             Die();
         }
 
@@ -46,6 +57,7 @@ public class KnightController : MonoBehaviour
         {
             if (movement < 0 && facingRight)
             {
+
                 transform.eulerAngles = new Vector3(0, -180, 0);
                 facingRight = false;
             } 
@@ -55,15 +67,25 @@ public class KnightController : MonoBehaviour
                 facingRight = true;
             }
             animator.SetBool("isRunning", true);
+            // Kiểm tra nếu runSound chưa phát thì mới phát
+            if (!audioSource.isPlaying || audioSource.clip != runSound)
+            {
+                audioSource.clip = runSound;
+                audioSource.loop = true; // Để nó chạy lặp lại mượt mà
+                audioSource.Play();
+            }
         }
         else
         {
+
             animator.SetBool("isRunning", false);
+            StopRunSound();
         }
 
         // Nhảy
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+
             Jump();
             animator.SetBool("isJumping", true);
         }
@@ -84,6 +106,7 @@ public class KnightController : MonoBehaviour
 
     public void Attack()
     {
+        PlaySound(attackSound);
         Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
         if (colliAttack)
         {
@@ -132,6 +155,7 @@ public class KnightController : MonoBehaviour
 
     private void Jump()
     {
+        PlaySound(jumpSound);
         //rb.linearVelocity = new Vector2(rb.linearVelocityX, 10f);
         rb.AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
         isGrounded = false;
@@ -170,17 +194,36 @@ public class KnightController : MonoBehaviour
 
     public void Heal(float healAmount)
     {
+        PlaySound(boostHealth);
         currentHealth = (currentHealth + healAmount > maxHealth) ? maxHealth : currentHealth + healAmount;
         Debug.Log("Player HP: " + currentHealth);
     }
 
     public void Victory()
     {
+        PlaySound(victorySound);
         animator.SetTrigger("Win");
     }
 
     public void buffDame(float dameIncrease)
     {
+        PlaySound(boostDame);
         currentDame += dameIncrease;
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
+    private void StopRunSound()
+    {
+        if (audioSource.isPlaying && audioSource.clip == runSound)
+        {
+            audioSource.Stop();
+            audioSource.clip = null; // Xóa clip để tránh xung đột
+        }
     }
 }

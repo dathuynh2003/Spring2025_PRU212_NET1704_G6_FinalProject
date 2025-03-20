@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MushroomEnemy : MonoBehaviour
 {
     public bool facingLeft = true;
     public float moveSpeed = 1f;
     public float moveDistance = 600f; // Khoảng cách di chuyển trước khi quay đầu
-    
+    [SerializeField] private AudioSource audioSource;
     //public Transform checkPoint;
     //public float distance = 1f;
     //public LayerMask layerMask;
@@ -192,5 +193,13 @@ public class MushroomEnemy : MonoBehaviour
         // Vẽ bán kính phát nổ
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, explodeRadius);
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
 public class FlyingEye : MonoBehaviour
 {
+    [SerializeField] private AudioSource audioSource;
     public float maxHealth = 5;
     private float currentHealth;
 
@@ -206,5 +208,12 @@ public class FlyingEye : MonoBehaviour
         // (Tuỳ chọn) Vô hiệu hóa script di chuyển, tấn công...
         this.enabled = false;
         Destroy(gameObject, 2f);  // Xoá enemy sau 3 giây
+    }
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 }
