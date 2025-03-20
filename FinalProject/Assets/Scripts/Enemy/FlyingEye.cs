@@ -14,9 +14,9 @@ public class FlyingEye : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb;
 
-    public Transform pointA;
-    public Transform pointB;
-    private Transform targetPoint;
+    private Vector2 pointA;
+    private Vector2 pointB;
+    private Vector2 targetPoint;
     private bool facingLeft = true;
 
     public float detectionRadius = 3f;
@@ -39,6 +39,9 @@ public class FlyingEye : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
 
+        var spawnPoint = transform.position;
+        pointA = new Vector2(spawnPoint.x - 4f, spawnPoint.y);
+        pointB = new Vector2(spawnPoint.x + 4f, spawnPoint.y);
         targetPoint = pointA;
         attack1Timer = attack1Cooldown;
     }
@@ -74,9 +77,9 @@ public class FlyingEye : MonoBehaviour
 
     void MoveBetweenPoints()
     {
-        transform.position = Vector2.MoveTowards(transform.position, targetPoint.position, moveSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, targetPoint, moveSpeed * Time.deltaTime);
 
-        if (Vector2.Distance(transform.position, targetPoint.position) < 0.1f)
+        if (Vector2.Distance(transform.position, targetPoint) < 0.1f)
         {
             if (targetPoint == pointB)
             {

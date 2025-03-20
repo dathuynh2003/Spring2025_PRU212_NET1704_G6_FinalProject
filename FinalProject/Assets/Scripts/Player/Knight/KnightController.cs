@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
-public class KnightController : MonoBehaviour
+public class KnightController : MonoBehaviour, IPlayerStats
 {
     public bool facingRight = true;
 
@@ -182,5 +182,25 @@ public class KnightController : MonoBehaviour
     public void buffDame(float dameIncrease)
     {
         currentDame += dameIncrease;
+    }
+
+    public float GetHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetDame()
+    {
+        return currentDame;
+    }
+
+    public void SetHealth(float value)
+    {
+        currentHealth = value;
+    }
+
+    public void SetDame(float value)
+    {
+        currentDame = value;
     }
 }

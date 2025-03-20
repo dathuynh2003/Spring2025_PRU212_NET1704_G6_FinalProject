@@ -74,10 +74,10 @@ public class DragronController : MonoBehaviour
         }
 
         // Hàm test = nhấn T
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Die();
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    Die();
+        //}
 
         // Hàm test = nhấn Y
         if (Input.GetKeyDown(KeyCode.Y))

@@ -270,15 +270,13 @@ MonoBehaviour:
   attack2Speed: 7
   dameAttack1: 1
   dameAttack2: 3
-  pointA: {fileID: 0}
-  pointB: {fileID: 0}
   detectionRadius: 2.5
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
   attack1Cooldown: 2
   attackPoint: {fileID: 1924058136038910750}
-  attackRadius: 0.36
+  attackRadius: 0.4
 --- !u!114 &6671194680528072742
 MonoBehaviour:
   m_ObjectHideFlags: 0
