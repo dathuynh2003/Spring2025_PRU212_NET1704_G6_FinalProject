@@ -5,6 +5,7 @@ public class DragronController : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb;
     public int maxHealth = 5;
+    public float currentHealth;
     private float moveSpeed = 5f;
     private float move;
     private bool isGrounded = true;
@@ -74,10 +75,10 @@ public class DragronController : MonoBehaviour
         }
 
         // Hàm test = nhấn T
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Die();
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    Die();
+        //}
 
         // Hàm test = nhấn Y
         if (Input.GetKeyDown(KeyCode.Y))
@@ -91,6 +92,7 @@ public class DragronController : MonoBehaviour
             TriggerDizzyEffect();
         }
     }
+
 
     // Xử lý va chạm
     private void OnCollisionEnter2D(Collision2D collision)

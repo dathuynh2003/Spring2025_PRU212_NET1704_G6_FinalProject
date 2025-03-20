@@ -3,7 +3,8 @@
 public class HealPotion : MonoBehaviour
 {
     public float healAmountPercent = 0.5f;
-
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip sound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,17 +26,26 @@ public class HealPotion : MonoBehaviour
             if (knightPlayer != null)
             {
                 float healAmount = knightPlayer.maxHealth * healAmountPercent;
+                PlaySound(sound);
                 knightPlayer.Heal(healAmount);
 
                 Debug.Log("Player healed for " + healAmount + " HP");
 
                 // Sau khi heal xong thì biến mất
-                Destroy(gameObject);
+                Destroy(gameObject, sound.length);
             }
             if (dragonPlayer != null)
             {
                 Debug.Log("Dragonheal");
             }
+        }
+    }
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+            Destroy(gameObject, clip.length); // Xóa sau khi âm thanh phát xong
         }
     }
 }
