@@ -104,12 +104,12 @@ public class GoblinController : MonoBehaviour
         if (colliAttack)
         {
             Debug.Log("Goblin attacks: " + colliAttack.gameObject.name);
-            if (colliAttack.gameObject.name == "Knight_Player")
+            if (colliAttack.gameObject.name.Contains("Knight"))
             {
                 var player = colliAttack.GetComponent<KnightController>();
                 player.TakeDame(attackDamage);
             }
-            if (colliAttack.gameObject.name == "Dragon")
+            if (colliAttack.gameObject.name.Contains("Dragron"))
             {
                 var player = colliAttack.GetComponent <DragronController>();
                 player.TakeDame(attackDamage);

@@ -219,19 +219,9 @@ public class KnightController : MonoBehaviour, IPlayerStats
         currentDame += dameIncrease;
     }
 
-    public float GetHealth()
-    {
-        return currentHealth;
-    }
-
     public float GetDame()
     {
         return currentDame;
-    }
-
-    public void SetHealth(float value)
-    {
-        currentHealth = value;
     }
 
     public void SetDame(float value)
@@ -252,5 +242,20 @@ public class KnightController : MonoBehaviour, IPlayerStats
             audioSource.Stop();
             audioSource.clip = null; // Xóa clip để tránh xung đột
         }
+    }
+
+    public float GetCurHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public void SetCurHealth(float value)
+    {
+        currentHealth = value;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DragronController : MonoBehaviour
+public class DragronController : MonoBehaviour, IPlayerStats
 {
     private Animator animator;
     private Rigidbody2D rb;
@@ -22,8 +22,6 @@ public class DragronController : MonoBehaviour
     public float fireRate = 0.2f;
     private float nextFireTime = 0f;
 
-    private bool isDead = false;
-
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip runSound;
@@ -44,7 +42,7 @@ public class DragronController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (maxHealth < 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -190,9 +188,8 @@ public class DragronController : MonoBehaviour
     public void TakeDame(float dame)
     {
 
-        if (maxHealth <= 0)
+        if (currentHealth <= 0)
         {
-            Die();
             return;
         }
 
@@ -205,7 +202,6 @@ public class DragronController : MonoBehaviour
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Die")) return; // Nếu đã chết thì không làm gì nữa
 
-        isDead = true;
         animator.SetTrigger("Die");
 
         // Ngừng di chuyển và tấn công
@@ -267,5 +263,30 @@ public class DragronController : MonoBehaviour
             audioSource.Stop();
             audioSource.clip = null; // Xóa clip để tránh xung đột
         }
+    }
+
+    public float GetCurHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public float GetDame()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetCurHealth(float value)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetDame(float value)
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 4804192066456639313}
   - component: {fileID: 6944791256897465566}
   - component: {fileID: 9183791290072133221}
-  - component: {fileID: 3674402914349716181}
   - component: {fileID: 5161103141439545035}
   m_Layer: 6
   m_Name: Knight_Player
@@ -161,6 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facingRight: 1
   maxHealth: 10
+  currentHealth: 0
   baseDame: 2
   jumpHeight: 15
   moveSpeed: 5
@@ -177,8 +177,6 @@ MonoBehaviour:
   victorySound: {fileID: 8300000, guid: dd4a7b6c48269d94388cc81d2dbee470, type: 3}
   runSound: {fileID: 8300000, guid: 773e688359dfee3428dbdfa51b3f6965, type: 3}
   hurtSound: {fileID: 0}
-  boostHealth: {fileID: 8300000, guid: b9a4d44fbbe85684c8fbfa8605f8f27c, type: 3}
-  boostDame: {fileID: 8300000, guid: fe5d570da5fd4fa4a8e6e05108bc316d, type: 3}
 --- !u!50 &6944791256897465566
 Rigidbody2D:
   serializedVersion: 5
@@ -252,19 +250,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0133455, y: 1.3539383}
   m_EdgeRadius: 0
---- !u!114 &3674402914349716181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7674329234355181650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bceab2bb177bcb4dbc00d9d68b4b9a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 5
 --- !u!82 &5161103141439545035
 AudioSource:
   m_ObjectHideFlags: 0

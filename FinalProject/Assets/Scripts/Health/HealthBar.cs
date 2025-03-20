@@ -1,31 +1,38 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private KnightController knightPlayer;
-    [SerializeField] private DragronController dragonPlayer;
+    //[SerializeField] private KnightController knightPlayer;
+    //[SerializeField] private DragronController dragonPlayer;
     [SerializeField] private Image healthBar;
+    private IPlayerStats playerStats;
     private void Start()
     {
-        if (knightPlayer.isActiveAndEnabled)
+        Invoke(nameof(FindPlayer), 0.1f);
+    }
+
+    private void FindPlayer()
+    {
+        GameObject currentPlayer = GameObject.FindWithTag("Player");
+
+        if (currentPlayer != null)
         {
-            healthBar.fillAmount = knightPlayer.maxHealth / 10f;
+            playerStats = currentPlayer.GetComponent<IPlayerStats>();
         }
-        else if (dragonPlayer.isActiveAndEnabled)
+
+        if (playerStats == null)
         {
-            healthBar.fillAmount = dragonPlayer.maxHealth / 10f;
+            Debug.LogError("Không tìm thấy Player Stats!");
         }
     }
+
     private void Update()
     {
-        if (knightPlayer.isActiveAndEnabled)
+        if (playerStats != null)
         {
-            healthBar.fillAmount = knightPlayer.currentHealth / 10f;
-        }
-        else if (dragonPlayer.isActiveAndEnabled)
-        {
-            healthBar.fillAmount = dragonPlayer.currentHealth / 10f;
+            float ratio = playerStats.GetCurHealth() / playerStats.GetMaxHealth();
+            healthBar.fillAmount = ratio;
         }
     }
 }

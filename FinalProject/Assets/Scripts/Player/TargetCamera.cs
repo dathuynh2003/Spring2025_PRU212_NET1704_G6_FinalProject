@@ -1,35 +1,76 @@
-using Unity.Cinemachine;
+﻿using Unity.Cinemachine;
 using UnityEngine;
 
 public class TargetCamera : MonoBehaviour
 {
-    [SerializeField] private KnightController knightPlayer;
-    [SerializeField] private DragronController dragonPlayer;
+    [Header("Prefabs")]
+    [SerializeField] private GameObject knightPrefab;
+    [SerializeField] private GameObject dragonPrefab;
+
+    [Header("Spawn Point")]
+    [SerializeField] private Transform spawnPoint;
+
+    [Header("Cinemachine Camera")]
     [SerializeField] private CinemachineVirtualCameraBase cinemachineCamera;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private GameObject currentPlayer; // giữ player hiện tại
 
-    private void Awake()
+    void Start()
     {
-        if (knightPlayer.isActiveAndEnabled)
+        SetupCharacter();
+    }
+
+    private void SetupCharacter()
+    {
+        // Kiểm tra nhân vật đã chọn trong GameManager
+        switch (GameManager.Instance.selectedCharacter)
         {
-            cinemachineCamera.LookAt = knightPlayer.transform;
-            cinemachineCamera.Follow = knightPlayer.transform;
+            case GameManager.CharacterType.Knight:
+                SpawnCharacter(knightPrefab);
+                break;
+
+            case GameManager.CharacterType.Dragon:
+                SpawnCharacter(dragonPrefab);
+                break;
+
+            default:
+                Debug.LogWarning("No character selected!");
+                break;
+        }
+    }
+
+    private void SpawnCharacter(GameObject characterPrefab)
+    {
+        if (characterPrefab == null)
+        {
+            Debug.LogError("Character prefab is null!");
+            return;
+        }
+
+        // Nếu đã có player cũ thì xóa đi
+        if (currentPlayer != null)
+        {
+            Destroy(currentPlayer);
+        } 
+        else
+        {
+            Debug.Log("currentPlayer null");
+
+        }
+
+        // Spawn prefab tại spawnPoint
+        currentPlayer = Instantiate(characterPrefab, spawnPoint.position, spawnPoint.rotation);
+        Debug.Log("CurrentPlayer: " + currentPlayer.name);
+
+        // Set Camera Follow + LookAt
+        if (cinemachineCamera != null)
+        {
+            cinemachineCamera.Follow = currentPlayer.transform;
+            cinemachineCamera.LookAt = currentPlayer.transform;
         }
         else
         {
-            cinemachineCamera.LookAt = dragonPlayer.transform;
-            cinemachineCamera.Follow = dragonPlayer.transform;
+            Debug.LogError("Cinemachine Camera chưa gán!");
         }
-    }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

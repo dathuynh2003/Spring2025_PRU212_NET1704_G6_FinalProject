@@ -43,7 +43,6 @@ public class BossController : MonoBehaviour
     private bool isReturning = false;   // Boss đang quay về
     private Coroutine bossRoutine;      // Lưu coroutine boss hành động
 
-    public PlayerManager playerManager;
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
@@ -88,8 +87,6 @@ public class BossController : MonoBehaviour
 
     private IEnumerator BossActionLoop()
     {
-        if (playerManager != null)
-            playerManager.setCanSwap(false);
 
         while (!isDead)
         {
@@ -351,8 +348,6 @@ public class BossController : MonoBehaviour
 
     private IEnumerator ReturnToInitialPosition()
     {
-        if (playerManager != null)
-            playerManager.setCanSwap(true);
         while (true)
         {
             float distance = Vector2.Distance(transform.position, initialPosition);
