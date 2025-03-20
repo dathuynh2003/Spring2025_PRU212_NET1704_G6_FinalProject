@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem.XR;
+using UnityEngine.SceneManagement;
 
 public class KnightController : MonoBehaviour, IPlayerStats
 {
@@ -118,15 +119,20 @@ public class KnightController : MonoBehaviour, IPlayerStats
             {
                 var enemy = colliAttack.GetComponent<FlyingEye>();
                 enemy.TakeDame(currentDame);
-            } else if (colliAttack.gameObject.name.Contains("Skeleton_Enemy"))
+            } else if (colliAttack.gameObject.name.Contains("Skeleton"))
             {
                 var enemy = colliAttack.GetComponent<SkeletonController>();
                 enemy.TakeDame(currentDame);
             }
-            else if (colliAttack.gameObject.name.Contains("Goblin_Enemy"))
+            else if (colliAttack.gameObject.name.Contains("Goblin"))
             {
                 var enemy = colliAttack.GetComponent<GoblinController>();
                 enemy.TakeDame(currentDame);
+            }
+            else if (colliAttack.gameObject.name.Contains("Mushroom"))
+            {
+                var enemy = colliAttack.GetComponent<MushroomEnemy>();
+                enemy.TakeDamage((int)currentDame);
             }
         }
     }
@@ -176,6 +182,7 @@ public class KnightController : MonoBehaviour, IPlayerStats
     public void DestroyPlayer()
     {
         Destroy(gameObject);
+        loadLoseScene();
     }
 
     public void Heal(float healAmount)
@@ -253,7 +260,7 @@ public class KnightController : MonoBehaviour, IPlayerStats
         // Tạm thời vô hiệu hóa di chuyển
         moveSpeed = 0;
 
-        // Sau 3 giây, rồng sẽ hết choáng và có thể di chuyển lại
+        // Sau 3 giây, sẽ hết choáng và có thể di chuyển lại
         Invoke("RecoverFromDizzy", 3f);
     }
 
@@ -261,6 +268,11 @@ public class KnightController : MonoBehaviour, IPlayerStats
     {
         animator.SetBool("isDizzy", false);
         moveSpeed = 5f; // Trả lại tốc độ di chuyển
+    }
+
+    public void loadLoseScene()
+    {
+        SceneManager.LoadScene("LoseScene");
     }
 }
 

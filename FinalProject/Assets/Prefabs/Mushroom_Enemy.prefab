@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 4681547701998860789}
   - component: {fileID: 4000023622444321890}
   - component: {fileID: 7536709367161565949}
+  - component: {fileID: 4695079601484607159}
   m_Layer: 3
   m_Name: Mushroom_Enemy
   m_TagString: Enemy
@@ -340,3 +341,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4695079601484607159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7808169945848710308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf2145adb83e164db514d39c7992567, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 7434744319901280801, guid: 8b8222f5432b85d4d9ba31e38a61ab5c, type: 3}
+  dropChances:
+  - 0.5

@@ -22,7 +22,7 @@ public class Fireball : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     public void SetDirection(int dir)
@@ -58,10 +58,12 @@ public class Fireball : MonoBehaviour
             MushroomEnemy mushroomEnemy = collision.GetComponent<MushroomEnemy>();
             BossController bossEnemy = collision.GetComponent<BossController>();
             FlyingEye flyingEye = collision.GetComponent<FlyingEye>();
+            SkeletonController skeleton = collision.GetComponent<SkeletonController>();
+            GoblinController goblin = collision.GetComponent<GoblinController>();
             if (mushroomEnemy != null)
             {
-                mushroomEnemy.TakeDamage(damage); 
-            } 
+                mushroomEnemy.TakeDamage(damage);
+            }
             else if (bossEnemy != null)
             {
                 bossEnemy.TakeDamage(damage);
@@ -70,8 +72,16 @@ public class Fireball : MonoBehaviour
             {
                 flyingEye.TakeDame(damage);
             }
+            else if (skeleton != null)
+            {
+                skeleton.TakeDame(damage);
+            }
+            else if (goblin != null)
+            {
+                goblin.TakeDame(damage);
+            }
 
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
     }
 
