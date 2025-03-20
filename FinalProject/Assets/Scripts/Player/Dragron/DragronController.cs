@@ -134,6 +134,8 @@ public class DragronController : MonoBehaviour
             fireballScript.SetDirection(1); // Bắn sang phải
         }
 
+        fireballScript.SetDamage((int)currentDame);
+
         //Collider2D colliAttack = Physics2D.OverlapCircle(attackPoint.position, attackRadius, attackLayer);
         //Debug.Log(colliAttack);
         //if (colliAttack)

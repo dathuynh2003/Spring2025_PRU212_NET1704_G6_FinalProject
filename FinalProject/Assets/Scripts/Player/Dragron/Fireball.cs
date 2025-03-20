@@ -7,7 +7,7 @@ public class Fireball : MonoBehaviour
     private Rigidbody2D myBody;
 
     private float maxX;
-    public int damage = 1;
+    public int damage;
     private int direction = 1;
 
     private void Awake()
@@ -73,5 +73,10 @@ public class Fireball : MonoBehaviour
 
             Destroy(gameObject); 
         }
+    }
+
+    public void SetDamage(int dmg)
+    {
+        damage = dmg;
     }
 }
