@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class BossController : MonoBehaviour
 {
@@ -400,5 +401,10 @@ public class BossController : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    public void LoadWinScene()
+    {
+        SceneManager.LoadScene("WinScene");
     }
 }
