@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 2655810652523007895}
+  startSound: {fileID: 8300000, guid: 25600a0029e0a374b92a27ff87051a7c, type: 3}
   maxHealth: 5
   moveSpeed: 2
   attack2Speed: 7

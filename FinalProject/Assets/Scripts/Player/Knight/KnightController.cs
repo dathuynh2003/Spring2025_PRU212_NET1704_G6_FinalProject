@@ -6,7 +6,7 @@ public class KnightController : MonoBehaviour
     public bool facingRight = true;
 
     public float maxHealth = 5;
-    private float currentHealth;
+    public float currentHealth;
 
     public float baseDame = 2;
     private float currentDame;
@@ -31,8 +31,8 @@ public class KnightController : MonoBehaviour
     [SerializeField] private AudioClip victorySound;
     [SerializeField] private AudioClip runSound;
     [SerializeField] private AudioClip hurtSound;
-    [SerializeField] private AudioClip boostHealth;
-    [SerializeField] private AudioClip boostDame;
+   // [SerializeField] private AudioClip boostHealth;
+  //  [SerializeField] private AudioClip boostDame;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -96,7 +96,6 @@ public class KnightController : MonoBehaviour
                 animator.SetTrigger("Attack");
         }
     }
-
     private void FixedUpdate()
     {
         //transform.Translate(Vector2.right * moveSpeed * movement * Time.deltaTime);
@@ -118,6 +117,15 @@ public class KnightController : MonoBehaviour
             } else if (colliAttack.gameObject.name == "FlyingEye")
             {
                 var enemy = colliAttack.GetComponent<FlyingEye>();
+                enemy.TakeDame(currentDame);
+            } else if (colliAttack.gameObject.name == "Skeleton_Enemy")
+            {
+                var enemy = colliAttack.GetComponent<SkeletonController>();
+                enemy.TakeDame(currentDame);
+            }
+            else if (colliAttack.gameObject.name == "Goblin_Enemy")
+            {
+                var enemy = colliAttack.GetComponent<GoblinController>();
                 enemy.TakeDame(currentDame);
             }
         }
@@ -194,7 +202,7 @@ public class KnightController : MonoBehaviour
 
     public void Heal(float healAmount)
     {
-        PlaySound(boostHealth);
+       // PlaySound(boostHealth);
         currentHealth = (currentHealth + healAmount > maxHealth) ? maxHealth : currentHealth + healAmount;
         Debug.Log("Player HP: " + currentHealth);
     }
@@ -207,7 +215,7 @@ public class KnightController : MonoBehaviour
 
     public void buffDame(float dameIncrease)
     {
-        PlaySound(boostDame);
+      //  PlaySound(boostDame);
         currentDame += dameIncrease;
     }
 
