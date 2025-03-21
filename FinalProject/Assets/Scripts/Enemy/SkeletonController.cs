@@ -167,9 +167,14 @@ public class SkeletonController : MonoBehaviour
         if (colliAttack)
         {
             Debug.Log("Attack1: " + colliAttack.gameObject.name + " takes dame");
-            if (colliAttack.gameObject.name == "Knight_Player")
+            if (colliAttack.gameObject.name.Contains("Knight"))
             {
                 var player = colliAttack.GetComponent<KnightController>();
+                player.TakeDame(dameAttack1);
+            }
+            else if (colliAttack.gameObject.name.Contains("Dragron"))
+            {
+                var player = colliAttack.GetComponent<DragronController>();
                 player.TakeDame(dameAttack1);
             }
         }
@@ -181,10 +186,15 @@ public class SkeletonController : MonoBehaviour
 
         if (colliAttack)
         {
-            if (colliAttack.gameObject.name == "Knight_Player")
+            if (colliAttack.gameObject.name.Contains("Knight"))
             {
                 var player = colliAttack.GetComponent<KnightController>();
                 player.TakeDame(dameAttack2);
+            }
+            else if (colliAttack.gameObject.name.Contains("Dragron"))
+            {
+                var player = colliAttack.GetComponent<DragronController>();
+                player.TakeDame(dameAttack1);
             }
         }
     }

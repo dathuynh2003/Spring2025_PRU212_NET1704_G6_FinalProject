@@ -204,8 +204,7 @@ public class BossController : MonoBehaviour
 
         StopAllCoroutines();
         Destroy(gameObject, 2f);
-
-        player.gameObject.GetComponent<KnightController>().Victory();
+        LoadWinScene();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -405,6 +404,6 @@ public class BossController : MonoBehaviour
 
     public void LoadWinScene()
     {
-        SceneManager.LoadScene("WinScene");
+        SceneManager.LoadScene("WinScene", LoadSceneMode.Single);
     }
 }
