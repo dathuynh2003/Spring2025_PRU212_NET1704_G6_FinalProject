@@ -29,7 +29,7 @@ public class MushroomEnemy : MonoBehaviour
     public LayerMask playerLayer;
     public float explodeRadius = 2f;
 
-    private int maxHealth = 5;
+    public int maxHealth = 5;
     private int currentHealth;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

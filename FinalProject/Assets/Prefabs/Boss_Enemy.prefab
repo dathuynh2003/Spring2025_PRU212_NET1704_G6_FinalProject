@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  maxHealth: 100
+  maxHealth: 50
   attackDamage: 1
   attackPoint: {fileID: 5302279562223452706}
   attackRadius: 1.15
@@ -190,7 +190,6 @@ MonoBehaviour:
   enrageSpeedMultiplier: 1.5
   enrageAttackDelayMultiplier: 0.7
   postAttackRestTime: 2
-  playerManager: {fileID: 0}
 --- !u!61 &1180426748081323757
 BoxCollider2D:
   m_ObjectHideFlags: 0
