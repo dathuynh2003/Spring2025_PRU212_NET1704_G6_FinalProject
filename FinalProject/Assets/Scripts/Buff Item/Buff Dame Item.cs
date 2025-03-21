@@ -32,12 +32,14 @@ public class BuffDameItem : MonoBehaviour
                 knightPlayer.buffDame(dameIncrease);
 
                 Debug.Log("Player increase " + dameIncrease + " dame(s)");
-                Destroy(gameObject);
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                Destroy(gameObject, sound.length);
             }
             if (dragonPlayer != null)
             {
                 dragonPlayer.buffDame(dameIncrease);
-                Destroy(gameObject);
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                Destroy(gameObject, sound.length);
             }
         }
     }

@@ -7,6 +7,9 @@ public class SpecialItem : MonoBehaviour
 
     public Portal portal;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip sound;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") && !isCollected)
@@ -20,8 +23,19 @@ public class SpecialItem : MonoBehaviour
 
     void CollectItem()
     {
+        PlaySound(sound);
         Debug.Log(itemName + " đã được nhặt!");
         //GameManager.Instance.SetItemCollected(itemName);
-        Destroy(gameObject); // Xóa vật phẩm sau khi nhặt
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        Destroy(gameObject, sound.length); // Xóa vật phẩm sau khi nhặt
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+            Destroy(gameObject, clip.length); // Xóa sau khi âm thanh phát xong
+        }
     }
 }
