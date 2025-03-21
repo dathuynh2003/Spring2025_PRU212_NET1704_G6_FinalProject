@@ -31,13 +31,13 @@ public class Portal : MonoBehaviour
             {
                 Debug.Log("Player đi qua map 2!");
                 // Chuyển sang màn tiếp theo
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Story2");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Level 2");
             }
             if (currentMap.Contains("Map2"))
             {
                 Debug.Log("Player đi qua map 3!");
                 // Chuyển sang màn tiếp theo
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Story3");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Level 3");
             }
         }
     }
